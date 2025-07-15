@@ -2,7 +2,7 @@
 
 **Welcome to the documentation for the Micorp Trading LLC website!** This document provides an overview of your new online platform, its features, and how it's designed to support your business goals.
 
----
+--- 
 
 ## 1. Your Digital Storefront: Project Overview
 
