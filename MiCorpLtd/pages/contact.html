@@ -6,8 +6,8 @@
     <title>Contact Us | Micorp Trading LLC | Bridging Innovation and Reliability</title>
     <meta name="description" content="Get in touch with Micorp Trading LLC, premier general trading company in Dubai specializing in Electronics, IT Products, and Automobiles. Contact us for inquiries and support.">
     
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="../css/animations.css">
+    <link rel="stylesheet" href="../css/style.css?v=1.1">
+    <link rel="stylesheet" href="../css/animations.css?v=1.1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- Leaflet CSS -->
@@ -19,6 +19,7 @@
     <link rel="manifest" href="../manifest.json">
     <meta name="theme-color" content="#00b8d4">
     <link rel="apple-touch-icon" href="../assets/images/icons/icon-192x192.png">
+    <link rel="icon" href="../assets/images/icons/icon-144x144.png">
 
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
@@ -26,7 +27,7 @@
       "@context": "https://schema.org",
       "@type": "TradingCompany",
       "name": "Micorp Trading LLC",
-      "url": "https://www.micorptrd.com/", 
+      "url": "https://www.micorptrd.com/pages/", 
       "logo": "https://www.micorptrd.com/assets/images/MiCORP_Logo.jpg", 
       "description": "Premier general trading company in Dubai specializing in Electronics, IT Products, and Automobiles. Your trusted partner in the UAE and beyond since 2010.",
       "telephone": "+97142390917",
@@ -43,20 +44,16 @@
         { "@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "10:00", "closes": "16:00" }
       ]
     }
-    </script>ss
+    </script>
 </head>
-<body>
-    <!-- WhatsApp Floating Button -->
-    <a href="https://wa.me/97142390917" class="whatsapp-float" target="_blank" aria-label="Chat on WhatsApp">
-        <i class="fab fa-whatsapp"></i>
-    </a>
-
+<body class="contact-page">
+    
     <!-- Header Section -->
     <header class="site-header">
         <nav class="navbar">
             <div class="container">
                 <a href="index.html" class="logo">
-                    <img src="../assets/images/MiCORP_Logo.jpg" alt="Micorp Trading LLC Logo">
+                    <img src="../assets/images/MiCORP_Logo.png" alt="Micorp Trading LLC Logo">
                 </a>
                 <button class="menu-toggle" aria-label="Toggle Menu" aria-expanded="false">
                     <span></span>
@@ -79,24 +76,24 @@
 
     <main>
         <!-- Hero Section -->
-        <section class="page-hero contact-hero"> <!-- Added contact-hero for specific styling if needed -->
+        <section class="page-hero contact-hero"> 
             <div class="hero-background">
-                <img src="../assets/images/contact-hero-bg.jpg" alt="Global Connection Concept">
+                <img src="../assets/images/hero/get-touch.jpg" alt="Stylized image representing global communication and connection.">
                 <div class="hero-overlay"></div>
             </div>
-            <div class="hero-content container"> <!-- Added container for consistent padding -->
-                <h1 class="reveal">Get in Touch</h1>
+            <div class="hero-content container"> 
+                <h1 class="reveal animate-text js-split">Get in Touch</h1>
                 <p class="reveal delay-1">We're here to help and answer any questions you might have. Reach out and let's connect!</p>
                 <div class="contact-quick-links reveal delay-2">
                     <a href="tel:+97142390917" class="contact-link">
                         <i class="fas fa-phone"></i>
                         <span>Call Us</span>
                     </a>
-                    <a href="mailto:info@micorptrd.com" class="contact-link"> <!-- Corrected generic email -->
+                    <a href="mailto:info@micorptrd.com" class="contact-link"> 
                         <i class="fas fa-envelope"></i>
                         <span>Email Us</span>
                     </a>
-                    <a href="#map-section" class="contact-link"> <!-- Changed to map-section ID -->
+                    <a href="#map-section" class="contact-link"> 
                         <i class="fas fa-map-marker-alt"></i>
                         <span>Visit Us</span>
                     </a>
@@ -105,7 +102,7 @@
         </section>
 
         <!-- Find Us Section -->
-        <section id="map-section" class="find-us-section"> <!-- Added ID for anchor link -->
+        <section id="map-section" class="find-us-section"> 
             <div class="container">
                 <div class="section-header">
                     <h2 class="reveal">Find Us Easily</h2>
@@ -133,7 +130,6 @@
                             <div class="contact-details">
                                 <h3>Phone Numbers</h3>
                                 <p><a href="tel:+97142390917">+971 4 239 0917</a></p>
-                                <p><a href="tel:+971505552860">+971 50 555 2860</a> (Mobile)</p>
                             </div>
                         </div>
                         
@@ -148,17 +144,6 @@
                             </div>
                         </div>
                         
-                        <div class="contact-card">
-                            <div class="contact-icon">
-                                <i class="fas fa-clock"></i>
-                            </div>
-                            <div class="contact-details">
-                                <h3>Working Hours</h3>
-                                <p>Monday - Friday: 9:00 AM - 6:00 PM</p>
-                                <p>Saturday: 10:00 AM - 4:00 PM</p>
-                                <p>Sunday: Closed</p>
-                            </div>
-                        </div>
                     </div>
                     
                     <div class="map-wrapper reveal animate-from-right">
@@ -178,23 +163,23 @@
                 
                 <div class="form-features-container">
                     <div class="contact-form-wrapper reveal animate-from-left">
-                        <form id="contactForm" method="POST">
+                        <form id="contactForm" action="https://formspree.io/f/mldnollk" method="POST"> 
                             <div class="form-group">
-                                <label for="name" class="sr-only">Your Name</label>
-                                <input type="text" id="name" name="name" placeholder="Your Name*" required aria-required="true">
+                                <label for="name" class="sr-only">Full Name</label>
+                                <input type="text" id="name" name="name" placeholder="Full Name*" required aria-required="true">
                             </div>
                             <div class="form-group">
-                                <label for="email" class="sr-only">Your Email</label>
-                                <input type="email" id="email" name="email" placeholder="Your Email*" required aria-required="true">
+                                <label for="email" class="sr-only">Email Address</label>
+                                <input type="email" id="email" name="_replyto" placeholder="Email Address*" required aria-required="true">
                             </div>
                             <div class="form-group">
-                                <label for="phone" class="sr-only">Your Phone Number</label>
-                                <input type="tel" id="phone" name="phone" placeholder="Your Phone Number (Optional)">
+                                <label for="phone" class="sr-only">Phone Number</label>
+                                <input type="tel" id="phone" name="phone" placeholder="Phone Number (Optional)">
                             </div>
                             <div class="form-group">
-                                <label for="subject" class="sr-only">Select Subject</label>
+                                <label for="subject" class="sr-only">Inquiry Subject</label>
                                 <select id="subject" name="subject" required aria-required="true">
-                                    <option value="" disabled selected>Select Subject*</option>
+                                    <option value="" disabled selected>Select Inquiry Subject*</option>
                                     <option value="general_inquiry">General Inquiry</option>
                                     <option value="product_information">Product Information</option>
                                     <option value="business_partnership">Business Partnership</option>
@@ -207,8 +192,10 @@
                             </div>
                             <div class="form-group">
                                 <label for="message" class="sr-only">Your Message</label>
-                                <textarea id="message" name="message" rows="5" placeholder="Your Message*" required aria-required="true"></textarea>
+                                <textarea id="message" name="message" rows="5" placeholder="Type your message here...*" required aria-required="true"></textarea>
                             </div>
+                            <input type="text" name="_gotcha" style="display:none !important">
+
                             <button type="submit" class="btn btn-primary">Send Message</button>
                         </form>
                     </div>
@@ -268,40 +255,40 @@
                 
                 <div class="faq-container reveal">
                     <div class="faq-item">
-                        <button class="faq-question" aria-expanded="false">
+                        <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-1">
                             What are your business hours?
                             <i class="fas fa-chevron-down"></i>
                         </button>
-                        <div class="faq-answer">
+                        <div class="faq-answer" id="faq-answer-1" role="region">
                             <p>Our office is open Monday through Friday from 9:00 AM to 6:00 PM (GST, GMT+4). We are also open on Saturdays from 10:00 AM to 4:00 PM. We are closed on Sundays and UAE public holidays.</p>
                         </div>
                     </div>
 
                     <div class="faq-item">
-                        <button class="faq-question" aria-expanded="false">
+                        <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-2">
                             How can I request a quote for specific products?
                             <i class="fas fa-chevron-down"></i>
                         </button>
-                        <div class="faq-answer">
+                        <div class="faq-answer" id="faq-answer-2" role="region">
                             <p>You can request a quote by filling out our contact form on this page, specifying the products you are interested in under the "Subject" and "Message" fields. Alternatively, you can call us directly at +971 4 239 0917 or email <a href="mailto:sales@micorptrd.com">sales@micorptrd.com</a>.</p>
                         </div>
                     </div>
 
                     <div class="faq-item">
-                        <button class="faq-question" aria-expanded="false">
+                        <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-3">
                             Do you provide international shipping?
                             <i class="fas fa-chevron-down"></i>
                         </button>
-                        <div class="faq-answer">
+                        <div class="faq-answer" id="faq-answer-3" role="region">
                             <p>Yes, Micorp Trading LLC offers international shipping services to most countries. Shipping costs and delivery times vary depending on the destination and the nature of the products. Please contact our sales team for specific shipping details and rates for your order.</p>
                         </div>
                     </div>
                      <div class="faq-item">
-                        <button class="faq-question" aria-expanded="false">
+                        <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-4">
                             What types of payment do you accept?
                             <i class="fas fa-chevron-down"></i>
                         </button>
-                        <div class="faq-answer">
+                        <div class="faq-answer" id="faq-answer-4" role="region">
                             <p>We accept various payment methods including bank transfers, Letters of Credit (L/C) for larger orders, and major credit cards (Visa, MasterCard). Please discuss payment options with our sales representative when placing your order.</p>
                         </div>
                     </div>
@@ -339,32 +326,52 @@
                     <h3>Our Products</h3>
                      <ul>
                         <li><a href="products.html#electronics">Electronics</a></li>
-                        <li><a href="products.html#it-products">IT Products</a></li>
-                        <li><a href="products.html#automobiles">Automobiles</a></li>
+                        <li><a href="it-products.html">IT Products</a></li>
+                        <li><a href="automobiles.html">Automobiles</a></li>
+                        <li><a href="food-stuff.html">Food Stuff</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
                     <h3>Contact Info</h3>
                     <ul>
-                        <li><i class="fas fa-phone"></i> <a href="tel:+97142390917">+971 4 239 0917</a></li>
-                        <li><i class="fas fa-envelope"></i> <a href="mailto:shanvir@micorptrd.com">shanvir@micorptrd.com</a></li>
+                       <li><i class="fas fa-phone"></i> <a href="tel:+971503294310">+971 50 329 4310</a></li>
+                        <li><i class="fas fa-envelope"></i> <a href="mailto:info@micorptrd.com">info@micorptrd.com</a></li>
                         <li><i class="fas fa-map-marker-alt"></i> Dubai, UAE</li>
                     </ul>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; <span id="currentYear">2024</span> Micorp Trading LLC. All Rights Reserved.</p>
+                <p>© <span id="currentYear">2025</span> Micorp Trading LLC. All Rights Reserved.</p>
             </div>
         </div>
     </footer>
+    
+    <!-- Floating Action Buttons & Chatbot Window -->
+    <div class="floating-action-button">
+        <button id="chatbot-toggle" aria-label="Open Chat" aria-expanded="false">
+            <i class="fas fa-comments"></i>
+        </button>
+    </div>
+
+    <div id="chatbot-window">
+        <div id="chatbot-header">
+            <span>Chat with Micorp Bot</span>
+            <button id="chatbot-close" aria-label="Close Chat">×</button>
+        </div>
+        <div id="chatbot-messages"></div>
+        <div id="chatbot-input-area">
+            <input type="text" id="chatbot-input" placeholder="Type your message...">
+            <button id="chatbot-send">Send</button>
+        </div>
+    </div>
     
     <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
      crossorigin=""></script>
-    <script>document.getElementById('currentYear').textContent = new Date().getFullYear();</script>
-    <script src="../js/main.js"></script> <!-- main.js should include map and FAQ logic now -->
-    <script src="../js/animations.js"></script>
+    <script src="../js/main.js?v=1.1"></script> 
+    <script src="../js/animations.js?v=1.1"></script>
+    <script src="../js/chatbot.js?v=1.1"></script> 
 
     <!-- Service Worker Registration -->
     <script>

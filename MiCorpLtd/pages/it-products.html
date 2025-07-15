@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IT Products & Solutions | Micorp Trading LLC</title>
     <meta name="description" content="Explore enterprise-grade IT hardware, software, networking, data center, and security solutions from Micorp Trading LLC.">
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="../css/animations.css">
+    <link rel="stylesheet" href="../css/style.css?v=1.1">
+    <link rel="stylesheet" href="../css/animations.css?v=1.1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
@@ -14,6 +14,7 @@
     <link rel="manifest" href="../manifest.json">
     <meta name="theme-color" content="#00b8d4">
     <link rel="apple-touch-icon" href="../assets/images/icons/icon-192x192.png">
+    <link rel="icon" href="../assets/images/icons/icon-144x144.png">
 
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
@@ -21,7 +22,7 @@
       "@context": "https://schema.org",
       "@type": "TradingCompany",
       "name": "Micorp Trading LLC",
-      "url": "https://www.micorptrd.com/", 
+      "url": "https://www.micorptrd.com/pages/", 
       "logo": "https://www.micorptrd.com/assets/images/MiCORP_Logo.jpg", 
       "description": "Premier general trading company in Dubai specializing in Electronics, IT Products, and Automobiles. Your trusted partner in the UAE and beyond since 2010.",
       "telephone": "+97142390917",
@@ -40,18 +41,14 @@
     }
     </script>
 </head>
-<body>
-    <!-- WhatsApp Floating Button -->
-    <a href="https://wa.me/97142390917" class="whatsapp-float" target="_blank" aria-label="Chat on WhatsApp">
-        <i class="fab fa-whatsapp"></i>
-    </a>
+<body class="it-products-page">
 
     <!-- Header Section -->
     <header class="site-header">
         <nav class="navbar">
             <div class="container">
                 <a href="index.html" class="logo">
-                    <img src="../assets/images/MiCORP_Logo.jpg" alt="Micorp Trading LLC Logo">
+                    <img src="../assets/images/MiCORP_Logo.png" alt="Micorp Trading LLC Logo">
                 </a>
                 <button class="menu-toggle" aria-label="Toggle Menu" aria-expanded="false">
                     <span></span>
@@ -76,11 +73,11 @@
         <!-- Page Hero Section -->
         <section class="page-hero">
              <div class="hero-background">
-                <img src="../assets/images/IT_Products_Img.jpg" alt="IT Infrastructure">
+                <img src="../assets/images/it-products/IT_Products_Hero.jpg" alt="Modern IT infrastructure and server room.">
                 <div class="hero-overlay"></div>
             </div>
             <div class="container">
-                <h1 class="reveal">IT Products & Solutions</h1>
+                <h1 class="reveal animate-text js-split">IT Products & Solutions</h1>
                 <p class="reveal delay-1">Enterprise-grade hardware, software, and comprehensive IT services</p>
             </div>
         </section>
@@ -99,10 +96,10 @@
                         <h3>Networking Equipment</h3>
                         <p>High-performance wired and wireless networking solutions</p>
                     </div>
-                    <div class="products-grid"> <!-- Reusing .products-grid from style.css -->
-                        <div class="product-card"> <!-- Reusing .product-card -->
+                    <div class="products-grid"> 
+                        <div class="product-card"> 
                             <div class="product-image">
-                                <img src="../assets/images/Hardware_solution.jpg" alt="Enterprise Routers"> <!-- Corrected path -->
+                                <img src="../assets/images/it-products/Enterprise routers.jpg" alt="Enterprise Routers for secure networking."> 
                             </div>
                             <div class="product-info">
                                 <h4>Enterprise Routers</h4>
@@ -116,7 +113,7 @@
                         </div>
                         <div class="product-card">
                             <div class="product-image">
-                                <img src="../assets/images/Software_solution.jpg" alt="Network Switches"> <!-- Placeholder, replace -->
+                                <img src="../assets/images/it-products/network-switch.jpg" alt="Network Switches for data centers."> 
                             </div>
                             <div class="product-info">
                                 <h4>Network Switches</h4>
@@ -130,7 +127,7 @@
                         </div>
                         <div class="product-card">
                             <div class="product-image">
-                                <img src="../assets/images/electronics/smart-home.jpg" alt="Wireless Solutions"> <!-- Placeholder, replace -->
+                                <img src="../assets/images/it-products/wireless solutions.jpg" alt="Wireless Access Points for business."> 
                             </div>
                             <div class="product-info">
                                 <h4>Wireless Solutions</h4>
@@ -154,7 +151,7 @@
                     <div class="products-grid">
                         <div class="product-card">
                             <div class="product-image">
-                                <img src="../assets/images/electronics/entertainment.jpg" alt="Enterprise Servers"> <!-- Placeholder -->
+                                <img src="../assets/images/it-products/Enterprise servers.jpg" alt="Enterprise Servers rackmount units."> 
                             </div>
                             <div class="product-info">
                                 <h4>Enterprise Servers</h4>
@@ -168,7 +165,7 @@
                         </div>
                         <div class="product-card">
                             <div class="product-image">
-                                <img src="../assets/images/automobiles.jpg" alt="Storage Systems"> <!-- Placeholder -->
+                                <img src="../assets/images/it-products/storage systems.jpg" alt="SAN and NAS Storage Systems."> 
                             </div>
                             <div class="product-info">
                                 <h4>Storage Systems</h4>
@@ -182,7 +179,7 @@
                         </div>
                         <div class="product-card">
                             <div class="product-image">
-                                <img src="../assets/images/Home page Background.jpg" alt="Backup Solutions"> <!-- Placeholder -->
+                                <img src="../assets/images/it-products/Backup and recovery.jpg" alt="Data Backup and Recovery solutions."> 
                             </div>
                             <div class="product-info">
                                 <h4>Backup & Recovery</h4>
@@ -197,57 +194,6 @@
                     </div>
                 </div>
                 
-                <!-- Security Solutions -->
-                <div id="software" class="product-category reveal delay-2"> <!-- Changed ID to software for link from products page -->
-                    <div class="category-header">
-                        <h3>Security & Software Solutions</h3>
-                        <p>Protecting your digital assets and powering your operations</p>
-                    </div>
-                    <div class="products-grid">
-                        <div class="product-card">
-                            <div class="product-image">
-                                <img src="../assets/images/electronics/wearables.jpg" alt="Next-Gen Firewalls"> <!-- Placeholder -->
-                            </div>
-                            <div class="product-info">
-                                <h4>Next-Gen Firewalls</h4>
-                                <ul class="product-features">
-                                    <li><i class="fas fa-fire-extinguisher"></i> Intrusion prevention (IPS)</li>
-                                    <li><i class="fas fa-filter"></i> Application control</li>
-                                    <li><i class="fas fa-user-secret"></i> SSL/TLS inspection</li>
-                                </ul>
-                                <a href="contact.html?subject=firewalls_inquiry" class="btn btn-secondary">Request Quote</a>
-                            </div>
-                        </div>
-                        <div class="product-card">
-                            <div class="product-image">
-                                <img src="../assets/images/About_us_office.avif" alt="Endpoint Security"> <!-- Placeholder -->
-                            </div>
-                            <div class="product-info">
-                                <h4>Endpoint Security</h4>
-                                <ul class="product-features">
-                                    <li><i class="fas fa-shield-virus"></i> Anti-malware protection</li>
-                                    <li><i class="fas fa-ban"></i> Device control & DLP</li>
-                                    <li><i class="fas fa-desktop"></i> Centralized management</li>
-                                </ul>
-                                <a href="contact.html?subject=endpoint_inquiry" class="btn btn-secondary">Request Quote</a>
-                            </div>
-                        </div>
-                         <div class="product-card">
-                            <div class="product-image">
-                                <img src="../assets/images/Software_solution.jpg" alt="Enterprise Software"> <!-- Corrected path -->
-                            </div>
-                            <div class="product-info">
-                                <h4>Enterprise Software</h4>
-                                <ul class="product-features">
-                                    <li><i class="fab fa-windows"></i> Operating Systems</li>
-                                    <li><i class="fas fa-briefcase"></i> Productivity Suites</li>
-                                    <li><i class="fas fa-database"></i> Database Management</li>
-                                </ul>
-                                <a href="contact.html?subject=software_inquiry" class="btn btn-secondary">Request Quote</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </section>
 
@@ -258,9 +204,9 @@
                     <h2 class="reveal">IT Services</h2>
                     <p class="reveal delay-1">Complementary services for your IT infrastructure and business continuity</p>
                 </div>
-                <div class="services-grid"> <!-- Used .services-grid from style.css -->
+                <div class="services-grid"> 
                     <div class="service-card reveal">
-                        <div class="feature-icon"> <!-- Reused feature-icon for consistency -->
+                        <div class="feature-icon"> 
                             <i class="fas fa-network-wired"></i>
                         </div>
                         <h3>Network Design & Implementation</h3>
@@ -332,28 +278,48 @@
                     <h3>Our Products</h3>
                      <ul>
                         <li><a href="products.html#electronics">Electronics</a></li>
-                        <li><a href="products.html#it-products">IT Products</a></li>
-                        <li><a href="products.html#automobiles">Automobiles</a></li>
+                        <li><a href="it-products.html">IT Products</a></li>
+                        <li><a href="automobiles.html">Automobiles</a></li>
+                        <li><a href="food-stuff.html">Food Stuff</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
                     <h3>Contact Info</h3>
                     <ul>
-                        <li><i class="fas fa-phone"></i> <a href="tel:+97142390917">+971 4 239 0917</a></li>
-                        <li><i class="fas fa-envelope"></i> <a href="mailto:shanvir@micorptrd.com">shanvir@micorptrd.com</a></li>
+                        <li><i class="fas fa-phone"></i> <a href="tel:+971503294310">+971 50 329 4310</a></li>
+                        <li><i class="fas fa-envelope"></i> <a href="mailto:info@micorptrd.com">info@micorptrd.com</a></li>
                         <li><i class="fas fa-map-marker-alt"></i> Dubai, UAE</li>
                     </ul>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; <span id="currentYear">2025</span> Micorp Trading LLC. All Rights Reserved.</p>
+                <p>© <span id="currentYear">2025</span> Micorp Trading LLC. All Rights Reserved.</p>
             </div>
         </div>
     </footer>
 
-    <script>document.getElementById('currentYear').textContent = new Date().getFullYear();</script>
-    <script src="../js/main.js"></script>
-    <script src="../js/animations.js"></script>
+    <!-- Floating Action Buttons & Chatbot Window -->
+    <div class="floating-action-button">
+        <button id="chatbot-toggle" aria-label="Open Chat" aria-expanded="false">
+            <i class="fas fa-comments"></i>
+        </button>
+    </div>
+
+    <div id="chatbot-window">
+        <div id="chatbot-header">
+            <span>Chat with Micorp Bot</span>
+            <button id="chatbot-close" aria-label="Close Chat">×</button>
+        </div>
+        <div id="chatbot-messages"></div>
+        <div id="chatbot-input-area">
+            <input type="text" id="chatbot-input" placeholder="Type your message...">
+            <button id="chatbot-send">Send</button>
+        </div>
+    </div>
+
+    <script src="../js/main.js?v=1.1"></script>
+    <script src="../js/animations.js?v=1.1"></script>
+    <script src="../js/chatbot.js?v=1.1"></script> 
 
     <!-- Service Worker Registration -->
     <script>

@@ -5,7 +5,7 @@ Allow: /js/
 Allow: /assets/
 Disallow: /cgi-bin/
 Disallow: /tmp/
-Disallow: /private/ # Example if such private directories exist
+Disallow: /private/ 
 
 # Allow crawling of PWA files by Google
 User-agent: Googlebot
@@ -44,5 +44,4 @@ Disallow: /
 User-agent: CCBot
 Disallow: /
 
-# Sitemap (create and submit sitemap.xml to search consoles for better indexing)
-# Sitemap: https://www.yourdomain.com/sitemap.xml
+Sitemap: https://www.micorptrd.com/sitemap.xml

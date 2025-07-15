@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Micorp Trading LLC | Premier Trading Partner</title>
     <meta name="description" content="Premier general trading company in Dubai specializing in Electronics, IT Products, and Automobiles. Your trusted partner in the UAE and beyond.">
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="../css/animations.css">
+    <link rel="stylesheet" href="../css/style.css?v=1.1">
+    <link rel="stylesheet" href="../css/animations.css?v=1.1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
@@ -16,14 +16,19 @@
     <link rel="icon" href="../assets/images/icons/icon-144x144.png">
     <link rel="apple-touch-icon" href="../assets/images/icons/icon-192x192.png">
 
+    <!-- Preload Important Assets -->
+    <link rel="preload" href="../assets/images/clients/ABS_logo.png" as="image">
+    <link rel="preload" href="../assets/images/clients/UAC_Logo.jpg" as="image">
+    <link rel="preload" href="../assets/images/clients/Bizpro_logo.png" as="image">
+
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "TradingCompany",
       "name": "Micorp Trading LLC",
-      "url": "https://www.micorptrd.com/", 
-      "logo": "https://www.micorptrd.com/assets/images/MiCORP_Logo.jpg", 
+      "url": "https://www.micorptrd.com/pages/",
+      "logo": "https://www.micorptrd.com/assets/images/MiCORP_Logo.jpg",
       "description": "Premier general trading company in Dubai specializing in Electronics, IT Products, and Automobiles. Your trusted partner in the UAE and beyond since 2010.",
       "telephone": "+97142390917",
       "email": "info@micorptrd.com",
@@ -41,18 +46,14 @@
     }
     </script>
 </head>
-<body>
-    <!-- WhatsApp Float Button -->
-    <a href="https://wa.me/97142390917" class="whatsapp-float" target="_blank" aria-label="Chat on WhatsApp">
-        <i class="fab fa-whatsapp"></i>
-    </a>
+<body class="home-page">
 
     <!-- Header Section -->
     <header class="site-header">
         <nav class="navbar">
             <div class="container">
                 <a href="index.html" class="logo">
-                    <img src="../assets/images/MiCORP_Logo.jpg" alt="Micorp Trading LLC Logo">
+                    <img src="../assets/images/MiCORP_Logo.png" alt="Micorp Trading LLC Logo">
                 </a>
                 <button class="menu-toggle" aria-label="Toggle Menu" aria-expanded="false">
                     <span></span>
@@ -75,14 +76,18 @@
 
     <!-- Main Content -->
     <main>
-        <!-- Hero Section -->
+                <!-- Hero Section -->
         <section class="hero home-hero">
             <div class="hero-background">
-                <img src="../assets/images/Home page Background.jpg" alt="Global Trading Network">
-                <div class="hero-overlay"></div>
+                <picture>
+                    <source media="(max-width: 767px)" srcset="../assets/images/hero/Homepage_Mobile.jpg">
+                    <source media="(min-width: 768px) and (max-width: 1023px)" srcset="../assets/images/hero/Homepage_Tablet.jpg">
+                    <img src="../assets/images/hero/Homepage_Desktop.jpg" alt="Dynamic global trading network with Micorp Trading LLC at the forefront, showcasing a modern business environment.">
+                </picture>
+                 <div class="hero-overlay"></div>
             </div>
             <div class="hero-content container">
-                <h1 class="reveal">Trading for <br> Anyone <br>Anywhere <br>Anytime</h1>
+                <h1 class="reveal delay-1 animate-text js-split">Trading for <br> Anyone <br>Anywhere <br>Anytime</h1>
                 <p class="reveal delay-1">Your premier partner for Electronics, IT Products, and Automobiles in the UAE and beyond.</p>
                 <div class="hero-buttons reveal delay-2">
                     <a href="about.html" class="btn btn-primary">Learn More</a>
@@ -90,23 +95,23 @@
                 </div>
             </div>
         </section>
-
+    
         <!-- About Section -->
         <section id="about" class="about-section">
             <div class="container">
                 <div class="section-header">
                     <h2 class="reveal">About Micorp Trading LLC</h2>
-                    <p class="reveal delay-1">Trusted trading partner since 2010</p>
+                    <p class="reveal delay-1">Trusted trading partner since 2021, delivering quality and reliability.</p>
                 </div>
                 <div class="about-content">
                     <div class="about-text reveal animate-from-left">
                         <h3>Our Story</h3>
                         <p>At Micorp Trading LLC, we specialize in delivering high-quality products across Electronics, IT, and Automotive sectors. Strategically located in Dubai, UAE, we connect global brands with regional markets, ensuring excellence and customer satisfaction in every transaction.</p>
                         <br><p>With over a decade of experience, we have established ourselves as a trusted partner for businesses looking to source top-tier products. Our commitment to quality, reliability, and customer service sets us apart in the competitive trading landscape.</p>
-                        <a href="about.html" class="btn btn-primary mt-20">Read More About Us</a>
+                        <a href="about.html" class="btn btn-primary">Read More About Us</a>
                     </div>
                     <div class="about-image reveal animate-from-right">
-                        <img src="../assets/images/About_us_office.avif" alt="Micorp Trading LLC Office">
+                        <img src="../assets/images/About_us_office.jpg" alt="Micorp Trading LLC Office - A hub of global trade and innovation.">
                     </div>
                 </div>
             </div>
@@ -117,12 +122,12 @@
             <div class="container">
                 <div class="section-header">
                     <h2 class="reveal">Our Product Categories</h2>
-                    <p class="reveal delay-1">Discover our comprehensive range of high-quality products</p>
+                    <p class="reveal delay-1">Discover our comprehensive range of high-quality products designed for your needs.</p>
                 </div>
                 <div class="product-categories">
                     <div class="product-card reveal">
                         <div class="product-image">
-                            <img src="../assets/images/Electronics_Img.jpg" alt="Electronics Products">
+                            <img src="../assets/images/Electronics_Img.jpg" alt="A collection of modern electronics products.">
                         </div>
                         <div class="product-info">
                             <h3>Electronics</h3>
@@ -132,22 +137,22 @@
                     </div>
                     <div class="product-card reveal delay-1">
                         <div class="product-image">
-                            <img src="../assets/images/IT_Products_Img.jpg" alt="IT Products and Solutions">
+                            <img src="../assets/images/IT_Products_Img.jpg" alt="An array of IT products and networking solutions.">
                         </div>
                         <div class="product-info">
                             <h3>IT Products</h3>
                             <p>Enterprise-grade hardware, software, and complete IT solutions.</p>
-                            <a href="products.html#it-products" class="btn btn-secondary">View IT Products</a>
+                            <a href="it-products.html" class="btn btn-secondary">View IT Products</a>
                         </div>
                     </div>
                     <div class="product-card reveal delay-2">
                         <div class="product-image">
-                            <img src="../assets/images/Automobiles.jpg" alt="Luxury and Commercial Automobiles">
+                            <img src="../assets/images/Automobiles.jpg" alt="A selection of luxury and commercial automobiles.">
                         </div>
                         <div class="product-info">
                             <h3>Automobiles</h3>
                             <p>A wide selection of luxury vehicles and robust commercial transport.</p>
-                            <a href="products.html#automobiles" class="btn btn-secondary">View Automobiles</a>
+                            <a href="automobiles.html" class="btn btn-secondary">View Automobiles</a>
                         </div>
                     </div>
                 </div>
@@ -159,9 +164,9 @@
             <div class="container">
                 <div class="section-header">
                     <h2 class="reveal">Why Choose Micorp Trading</h2>
-                    <p class="reveal delay-1">What sets us apart from the competition</p>
+                    <p class="reveal delay-1">What sets us apart from the competition and makes us your ideal partner.</p>
                 </div>
-                
+
                 <div class="features-grid">
                     <div class="feature-card reveal">
                         <div class="feature-icon">
@@ -170,15 +175,15 @@
                         <h3>Quality Assurance</h3>
                         <p>All our products undergo rigorous quality checks to ensure they meet international standards and client expectations.</p>
                     </div>
-                    
+
                     <div class="feature-card reveal delay-1">
                         <div class="feature-icon">
                             <i class="fas fa-headset"></i>
                         </div>
                         <h3>Dedicated Support</h3>
-                        <p>Our expert support team is available to assist you with any queries, ensuring a smooth experience.</p>
+                        <p>Our expert support team is available to assist you with any queries, ensuring a smooth experience from start to finish.</p>
                     </div>
-                    
+
                     <div class="feature-card reveal delay-2">
                         <div class="feature-icon">
                             <i class="fas fa-globe-americas"></i>
@@ -198,13 +203,14 @@
             <div class="container">
                 <div class="section-header">
                     <h2 class="reveal">Our Valued Clients</h2>
-                    <p class="reveal delay-1">Trusted by industry leaders worldwide</p>
+                    <p class="reveal delay-1">Trusted by industry leaders worldwide for exceptional products and services.</p>
                 </div>
-                
+
                 <div class="clients-grid">
-                    <div class="client-logo reveal"><img src="../assets/images/ABS_logo.png" alt="ABS Client Logo"></div>
-                    <div class="client-logo reveal delay-1"><img src="../assets/images/UAC_Logo.jpg" alt="UAC Client Logo"></div>
-                    <div class="client-logo reveal delay-2"><img src="../assets/images/Bizpro_logo.png" alt="Biz pro"></div>
+                    <!-- **FIXED CLASS** -->
+                    <div class="client-logo animate-scale"><img src="../assets/images/clients/ABS_logo.png" alt="ABS Client Logo"></div>
+                    <div class="client-logo animate-scale delay-1"><img src="../assets/images/clients/UAC_Logo.jpg" alt="UAC Client Logo"></div>
+                    <div class="client-logo animate-scale delay-2"><img src="../assets/images/clients/Bizpro_logo.png" alt="Bizpro Client Logo"></div>
                 </div>
                 <div class="text-center mt-20 reveal delay-4">
                      <a href="clients.html" class="btn btn-secondary">View All Clients</a>
@@ -253,28 +259,49 @@
                     <h3>Our Products</h3>
                     <ul>
                         <li><a href="products.html#electronics">Electronics</a></li>
-                        <li><a href="products.html#it-products">IT Products</a></li>
-                        <li><a href="products.html#automobiles">Automobiles</a></li>
+                        <li><a href="it-products.html">IT Products</a></li>
+                        <li><a href="automobiles.html">Automobiles</a></li>
+                        <li><a href="food-stuff.html">Food Stuff</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
                     <h3>Contact Info</h3>
                     <ul>
-                        <li><i class="fas fa-phone"></i> <a href="tel:+97142390917">+971 4 239 0917</a></li>
-                        <li><i class="fas fa-envelope"></i> <a href="mailto:shanvir@micorptrd.com">shanvir@micorptrd.com</a></li>
+                        <li><i class="fas fa-phone"></i> <a href="tel:+971503294310">+971 50 329 4310</a></li>
+                        <li><i class="fas fa-envelope"></i> <a href="mailto:info@micorptrd.com">info@micorptrd.com</a></li>
                         <li><i class="fas fa-map-marker-alt"></i> Dubai, UAE</li>
                     </ul>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; <span id="currentYear">2025</span> Micorp Trading LLC. All Rights Reserved.</p>
+                <p>© <span id="currentYear">2025</span> Micorp Trading LLC. All Rights Reserved.</p>
             </div>
         </div>
     </footer>
 
-    <script>document.getElementById('currentYear').textContent = new Date().getFullYear();</script>
-    <script src="../js/main.js"></script>
-    <script src="../js/animations.js"></script>
+    <!-- Floating Action Buttons & Chatbot Window -->
+    <div class="floating-action-button">
+        <button id="chatbot-toggle" aria-label="Open Chat" aria-expanded="false">
+            <i class="fas fa-comments"></i>
+        </button>
+    </div>
+
+    <div id="chatbot-window">
+        <div id="chatbot-header">
+            <span>Chat with Micorp Bot</span>
+            <button id="chatbot-close" aria-label="Close Chat">×</button>
+        </div>
+        <div id="chatbot-messages"></div>
+        <div id="chatbot-input-area">
+            <input type="text" id="chatbot-input" placeholder="Type your message...">
+            <button id="chatbot-send">Send</button>
+        </div>
+    </div>
+
+
+    <script src="../js/main.js?v=1.1"></script>
+    <script src="../js/animations.js?v=1.1"></script>
+    <script src="../js/chatbot.js?v=1.1"></script>  
 
     <!-- Service Worker Registration -->
     <script>

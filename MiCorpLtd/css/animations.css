@@ -52,7 +52,7 @@
     }
 }
 
-@keyframes bounce {
+@keyframes bounce { /* Example, not actively used but can be */
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-10px); }
 }
@@ -63,11 +63,13 @@
 .animate-from-left,
 .animate-from-right,
 .animate-fade-in,
-.animate-scale {
+.animate-scale,
+.animate-text.js-split { /* Target .js-split for char animation */
     opacity: 0;
     will-change: opacity, transform; /* Performance hint */
 }
 
+/* Default reveal is fadeInUp */
 .reveal.active,
 .animate-from-bottom.active {
     animation: fadeInUp 0.8s cubic-bezier(0.645, 0.045, 0.355, 1) forwards;
@@ -90,328 +92,38 @@
 }
 
 /* Animation Delays */
-.delay-1 { animation-delay: 0.2s !important; } /* Use !important carefully or manage specificity */
+/* Use !important sparingly, prefer higher specificity if conflicts arise */
+.delay-1 { animation-delay: 0.2s !important; } 
 .delay-2 { animation-delay: 0.4s !important; }
 .delay-3 { animation-delay: 0.6s !important; }
 .delay-4 { animation-delay: 0.8s !important; }
 
 
-/* Text Animation (Example for hero titles, if used via JS) */
-.animate-text .char {
-    display: inline-block;
-    opacity: 0;
-    transform: translateY(20px);
-    animation: fadeInUpChar 0.6s forwards;
+/* Text Character Animation (triggered by JS adding .active to .animate-text.js-split) */
+.animate-text.js-split.active .char {
+    /* animation-delay is set inline by JS */
+    animation: fadeInUpCharAdvanced 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+    opacity: 0; /* ensure it starts hidden before animation if JS is slow */
+    transform: translateY(25px) rotateX(-90deg);
+    transform-origin: bottom center;
 }
 
-@keyframes fadeInUpChar {
+@keyframes fadeInUpCharAdvanced {
     to {
         opacity: 1;
-        transform: translateY(0);
+        transform: translateY(0) rotateX(0deg);
     }
 }
 
-/* Product Card Hover Effects */
-.product-card, .vehicle-card {
-    /* Base transition is already on the card from style.css */
-}
 
-.product-card:hover, .vehicle-card:hover {
-    /* Base hover transform is already on the card from style.css */
-}
+/* Product Card Hover Effects (already defined in style.css, ensure no conflicts) */
+/* .product-card, .vehicle-card {} */
+/* .product-card:hover, .vehicle-card:hover {} */
+/* .product-image img, .vehicle-image img {} */
+/* .product-card:hover .product-image img, .vehicle-card:hover .vehicle-image img {} */
 
-.product-image img, .vehicle-image img {
-    /* Base image transition is already on the image from style.css */
-}
-
-.product-card:hover .product-image img,
-.vehicle-card:hover .vehicle-image img {
-    /* Base image hover transform is already on the image from style.css */
-}
-
-/* Badge Animation */
+/* Badge Animation (Example: fadeIn) */
 .product-badge, .vehicle-badge {
-    /* Example animation: fadeIn, or specific ones like slideIn from corner */
-    animation: fadeIn 0.5s ease-out 0.3s forwards; /* Apply after card reveals */
-    opacity: 0; /* Start hidden if animated */
-}
-```
-
---- START OF FILE clients.css ---
-```css
-/* CLIENTS PAGE - STYLES */
-
-/* Ensure variables from style.css are available if this is a separate context,
-   but usually, they are global. */
-
-.clients-page .page-hero {
-    /* Specific hero styling for clients page if needed */
-    /* background-image: url('../assets/images/clients-hero-bg.jpg'); */ /* Example */
-}
-
-.clients-grid-section {
-    /* Styles specific to the grid section on clients page */
-}
-
-.industry-filter {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin-bottom: 40px;
-    flex-wrap: wrap;
-}
-
-.filter-btn {
-    padding: 10px 25px;
-    border: 2px solid var(--primary-color);
-    background: transparent;
-    color: var(--primary-color);
-    border-radius: 30px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-weight: 500;
-    font-size: 0.9rem;
-}
-
-.filter-btn.active,
-.filter-btn:hover {
-    background: var(--primary-color);
-    color: white;
-}
-
-.clients-grid .client-card {
-    /* Base card styles are inherited from style.css */
-    /* Add any client-card specific overrides here */
-    text-align: center;
-}
-
-.client-logo-container {
-    height: 150px; /* Adjusted height */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    background: var(--light-gray-color); /* Lighter background for logo area */
-    border-bottom: 1px solid #e0e0e0;
-    border-radius: var(--border-radius) var(--border-radius) 0 0; /* Match card rounding */
-}
-
-.client-logo {
-    max-width: 100%;
-    max-height: 90px; /* Max height for the logo itself */
-    object-fit: contain;
-    filter: none;
-    opacity: 1;
-    transition: var(--transition);
-}
-
-.client-card:hover .client-logo {
-    filter: grayscale(0%);
-    opacity: 1;
-    transform: scale(1.03);
-}
-
-.client-info {
-    padding: 20px;
-}
-
-.client-info h3 {
-    color: var(--dark-color); /* Was primary-dark, made consistent */
-    margin-bottom: 8px;
-    font-size: 1.2rem;
-}
-
-.client-info p {
-    color: var(--gray-color);
-    font-size: 0.9rem;
-    line-height: 1.5;
-}
-
-/* Testimonials Section on Clients Page */
-.testimonials-section {
-    background-color: var(--light-gray-color); /* Differentiate from client grid */
-}
-
-.testimonial-slider {
-    position: relative;
-    max-width: 800px;
-    margin: 40px auto 0;
-    overflow: hidden; /* Important for sliding effect */
-}
-
-.testimonial-track {
-    display: flex; /* Allows slides to sit side-by-side */
-    transition: transform 0.5s ease-in-out;
-}
-
-.testimonial-slide {
-    min-width: 100%; /* Each slide takes full width of the track's container */
-    box-sizing: border-box;
-    padding: 0 15px; /* Some spacing if multiple slides are partially visible */
-}
-
-.testimonial-slide .testimonial-content { /* This is the card from why-choose-us */
-    background: var(--light-color);
-    padding: 30px;
-    border-radius: var(--border-radius);
-    box-shadow: var(--box-shadow);
-    text-align: center; /* Re-apply if needed */
-}
-
-.testimonial-slide .quote-icon {
-    color: var(--primary-color);
-    font-size: 2rem;
-    margin-bottom: 20px;
-}
-
-.testimonial-slide .testimonial-text {
-    font-size: 1.1rem;
-    line-height: 1.7;
-    margin-bottom: 25px;
-    color: var(--medium-dark-color);
-    font-style: italic;
-}
-
-.testimonial-slide .client-details { /* Renamed from testimonial-author */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 15px;
-    margin-top: 20px;
-}
-.testimonial-slide .client-details h4 {
-    margin-bottom: 3px;
-    font-size: 1rem;
-}
-.testimonial-slide .client-details .client-position { /* New class for clarity */
-    font-size: 0.85rem;
-    color: var(--gray-color);
-    margin: 0;
-}
-
-.testimonial-slide .client-photo { /* Renamed from testimonial-author img */
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 3px solid var(--primary-color);
-}
-
-.slider-controls {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
-    margin-top: 30px;
-}
-
-.slider-controls .prev-slide,
-.slider-controls .next-slide {
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    color: var(--primary-color);
-    cursor: pointer;
-    transition: transform 0.3s ease, color 0.3s ease;
-    padding: 5px;
-}
-
-.slider-controls .prev-slide:hover,
-.slider-controls .next-slide:hover {
-    transform: scale(1.15);
-    color: var(--primary-dark);
-}
-
-.slider-dots {
-    display: flex;
-    gap: 10px;
-}
-
-.slider-dots .dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: #ccc; /* Inactive dot color */
-    border: none;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.slider-dots .dot.active {
-    background: var(--primary-color);
-    transform: scale(1.2);
-}
-
-/* Case Studies Section (if added to clients page) */
-.case-studies-section {
-    padding: 80px 0;
-    /* background: #f0f4f8; */ /* Example different background */
-}
-
-.case-studies-grid .case-study-card {
-    /* Base card style inherited */
-    position: relative;
-    overflow: hidden; /* For overlay effect */
-    aspect-ratio: 16/10; /* Maintain aspect ratio */
-}
-
-.case-study-image {
-    width: 100%;
-    height: 100%;
-}
-
-.case-study-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.5s ease;
-}
-
-.case-study-card:hover .case-study-image img {
-    transform: scale(1.05);
-}
-
-.case-study-overlay {
-    position: absolute;
-    inset: 0; /* top, right, bottom, left = 0 */
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 70%);
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end; /* Align content to bottom */
-    padding: 20px;
-    color: white;
-    opacity: 1; /* Always visible, content fades in/up */
-    transition: background-color 0.3s ease;
-}
-.case-study-card:hover .case-study-overlay {
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.1) 70%);
-}
-
-.case-study-overlay h3 {
-    color: white;
-    margin-bottom: 10px;
-    transform: translateY(20px);
-    opacity: 0;
-    transition: transform 0.4s ease 0.1s, opacity 0.4s ease 0.1s;
-}
-.case-study-card:hover .case-study-overlay h3 {
-    transform: translateY(0);
-    opacity: 1;
-}
-
-
-@media (max-width: 768px) {
-    .industry-filter {
-        gap: 10px;
-    }
-    .filter-btn {
-        padding: 8px 18px;
-        font-size: 0.85rem;
-    }
-    .clients-grid {
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    }
-    .testimonial-slide .testimonial-text {
-        font-size: 1rem;
-    }
+    animation: fadeIn 0.5s ease-out 0.5s forwards; /* Delay to appear after card reveal */
+    opacity: 0; /* Start hidden for animation */
 }

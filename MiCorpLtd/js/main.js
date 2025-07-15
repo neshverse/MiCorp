@@ -1,248 +1,214 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // COMMON SITE-WIDE INITIALIZATIONS
+    initMobileMenu();
+    initScrollBehaviors();
+    initCurrentYear();
+    initFloatingActionButtons();
+
+    // PAGE-SPECIFIC INITIALIZATIONS
+    if (document.body.classList.contains('contact-page')) {
+        initContactPage();
+    }
+    if (document.body.classList.contains('why-choose-us')) {
+        initWhyChooseUsPage();
+    }
+});
+
+// --- COMMON FUNCTIONS ---
+function initMobileMenu() {
     const menuToggle = document.querySelector('.menu-toggle');
     const navWrapper = document.querySelector('.nav-wrapper');
-    const navLinks = document.querySelectorAll('.nav-wrapper .nav-links a'); // Target links within nav-wrapper
-    const body = document.body;
-    const siteHeader = document.querySelector('.site-header');
 
-    // Add index to nav items for staggered animation if needed by CSS
-    document.querySelectorAll('.nav-links li').forEach((link, index) => {
-        link.style.setProperty('--item-index', index);
-    });
+    if (menuToggle && navWrapper) {
+        menuToggle.addEventListener('click', () => {
+            const isActive = menuToggle.classList.toggle('active');
+            navWrapper.classList.toggle('active');
+            menuToggle.setAttribute('aria-expanded', isActive ? 'true' : 'false');
+            document.body.classList.toggle('menu-open', isActive);
 
-    // Toggle menu
-    menuToggle?.addEventListener('click', (e) => {
-        e.stopPropagation(); // Prevent click from bubbling to document
-        const isActive = menuToggle.classList.toggle('active');
-        navWrapper.classList.toggle('active', isActive);
-        body.classList.toggle('menu-open', isActive);
-    });
-
-    // Close menu when a link is clicked
-    navLinks.forEach(link => {
-        link.addEventListener('click', () => {
-            if (navWrapper.classList.contains('active')) {
-                menuToggle.classList.remove('active');
-                navWrapper.classList.remove('active');
-                body.classList.remove('menu-open');
-            }
-        });
-    });
-
-    // Close menu when clicking outside
-    document.addEventListener('click', (e) => {
-        if (navWrapper && navWrapper.classList.contains('active') &&
-            !navWrapper.contains(e.target) &&
-            !menuToggle.contains(e.target)) {
-            menuToggle.classList.remove('active');
-            navWrapper.classList.remove('active');
-            body.classList.remove('menu-open');
-        }
-    });
-    
-    // Close menu on Escape key
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && navWrapper && navWrapper.classList.contains('active')) {
-            menuToggle.classList.remove('active');
-            navWrapper.classList.remove('active');
-            body.classList.remove('menu-open');
-        }
-    });
-
-
-    // Navbar scroll effect (optional, if you want background change on scroll)
-    let lastScrollTop = 0;
-    window.addEventListener('scroll', () => {
-        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-        if (siteHeader) {
-            if (scrollTop > 50) {
-                siteHeader.style.boxShadow = '0 5px 15px rgba(0,0,0,0.1)';
-            } else {
-                siteHeader.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)'; // Keep initial shadow
-            }
-            // Basic hide/show navbar on scroll
-            // if (scrollTop > lastScrollTop && scrollTop > siteHeader.offsetHeight) {
-            //     // Scroll Down
-            //     siteHeader.style.top = `-${siteHeader.offsetHeight}px`;
-            // } else {
-            //     // Scroll Up
-            //     siteHeader.style.top = "0";
-            // }
-        }
-        lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; // For Mobile or negative scrolling
-    });
-
-    // Smooth scroll for anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            const href = this.getAttribute('href');
-            // Check if it's a simple hash for the current page
-            if (href.startsWith('#') && href.length > 1) {
-                const targetElement = document.querySelector(href);
-                if (targetElement) {
-                    e.preventDefault();
-                    const headerOffset = siteHeader ? siteHeader.offsetHeight : 80;
-                    const elementPosition = targetElement.getBoundingClientRect().top;
-                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-                    window.scrollTo({
-                        top: offsetPosition,
-                        behavior: 'smooth'
-                    });
-                }
-            }
-        });
-    });
-
-    // Contact Form Handling (Contact Page)
-    const contactForm = document.getElementById('contactForm');
-    if (contactForm) {
-        contactForm.addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            const name = document.getElementById('name').value.trim();
-            const email = document.getElementById('email').value.trim();
-            const subject = document.getElementById('subject').value;
-            const message = document.getElementById('message').value.trim();
-            
-            if (!name || !email || !subject || !message) {
-                alert('Please fill in all required fields (*).');
-                return;
-            }
-
-            const submitButton = contactForm.querySelector('button[type="submit"]');
-            const originalButtonText = submitButton.innerHTML;
-            submitButton.disabled = true;
-            submitButton.innerHTML = 'Sending... <i class="fas fa-spinner fa-spin"></i>';
-
-            try {
-                // Simulate API call
-                await new Promise(resolve => setTimeout(resolve, 1500));
-                
-                // Simulate success
-                submitButton.innerHTML = 'Message Sent! <i class="fas fa-check"></i>';
-                alert('Thank you for your message. We will contact you soon!');
-                contactForm.reset();
-                
-                setTimeout(() => {
-                    submitButton.disabled = false;
-                    submitButton.innerHTML = originalButtonText;
-                }, 2000);
-
-            } catch (error) {
-                console.error('Form submission error:', error);
-                alert('There was an error sending your message. Please try again.');
-                submitButton.disabled = false;
-                submitButton.innerHTML = originalButtonText;
+            if (isActive) {
+                const navLinks = navWrapper.querySelectorAll('.nav-links li');
+                navLinks.forEach((li, index) => {
+                    li.style.setProperty('--item-index', index);
+                });
             }
         });
     }
+}
 
-    // FAQ Functionality (Contact Page)
-    const faqQuestions = document.querySelectorAll('.faq-question');
-    faqQuestions.forEach(question => {
-        question.addEventListener('click', () => {
-            const answer = question.nextElementSibling;
-            const isActive = question.classList.toggle('active');
-            
-            if (answer) {
-                if (isActive) {
-                    answer.classList.add('show');
-                    answer.style.maxHeight = answer.scrollHeight + "px";
-                } else {
-                    answer.classList.remove('show');
-                    answer.style.maxHeight = null;
-                }
-            }
+function initScrollBehaviors() {
+    const siteHeader = document.querySelector('.site-header');
+    if (!siteHeader) return;
 
-            // Optional: Close other FAQs
-            faqQuestions.forEach(otherQuestion => {
-                if (otherQuestion !== question && otherQuestion.classList.contains('active')) {
-                    otherQuestion.classList.remove('active');
-                    const otherAnswer = otherQuestion.nextElementSibling;
-                    if (otherAnswer) {
-                        otherAnswer.classList.remove('show');
-                        otherAnswer.style.maxHeight = null;
+    const fabContainer = document.querySelector('.floating-action-button');
+    const chatbotWindow = document.getElementById('chatbot-window');
+    const chatbotToggle = document.getElementById('chatbot-toggle');
+    const isHomePage = document.body.classList.contains('home-page');
+    
+    if(isHomePage) {
+        siteHeader.classList.add('is-on-home-page');
+    }
+
+    let lastScrollTop = 0;
+    window.addEventListener('scroll', () => {
+        let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        
+        if (chatbotWindow && chatbotWindow.classList.contains('active')) {
+            chatbotWindow.classList.remove('active');
+            if (chatbotToggle) chatbotToggle.setAttribute('aria-expanded', 'false');
+        }
+        
+        // Handle header style change
+        if (scrollTop > 50) {
+            siteHeader.classList.add('header-scrolled');
+        } else {
+            siteHeader.classList.remove('header-scrolled');
+        }
+        
+        // Hide/show on scroll logic for header and FAB
+        if (scrollTop > lastScrollTop && scrollTop > 100) {
+            // Scrolling Down
+            if (!isHomePage) siteHeader.classList.add('hidden'); // Hide header only on non-home pages
+            if (fabContainer) fabContainer.classList.add('hidden');
+        } else {
+            // Scrolling Up
+            if (!isHomePage) siteHeader.classList.remove('hidden');
+            if (fabContainer) fabContainer.classList.remove('hidden');
+        }
+        
+        lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+
+    }, { passive: true });
+}
+
+function initCurrentYear() {
+    const yearSpan = document.getElementById('currentYear');
+    if (yearSpan) {
+        yearSpan.textContent = new Date().getFullYear();
+    }
+}
+
+function initFloatingActionButtons() {
+    const fabContainer = document.querySelector('.floating-action-button');
+    if (fabContainer) {
+        setTimeout(() => {
+            fabContainer.classList.add('visible');
+        }, 500);
+    }
+}
+
+
+// --- WHY CHOOSE US PAGE SPECIFIC ---
+function initWhyChooseUsPage() {
+    const statNumbers = document.querySelectorAll('.why-choose-us .stat-number');
+    if (statNumbers.length > 0) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const el = entry.target;
+                    const countTo = parseInt(el.dataset.count, 10);
+                    if (!el.classList.contains('counted')) {
+                        animateCount(el, 0, countTo, 1500);
+                        el.classList.add('counted');
+                        observer.unobserve(el);
                     }
                 }
             });
-        });
-    });
+        }, { threshold: 0.5 });
+        statNumbers.forEach(stat => observer.observe(stat));
+    }
+}
 
-    // Initialize Leaflet Map (Contact Page)
-    if (document.getElementById('map')) {
+function animateCount(element, start, end, duration) {
+    let startTime = null;
+    function animation(currentTime) {
+        if (startTime === null) startTime = currentTime;
+        const timeElapsed = currentTime - startTime;
+        const progress = Math.min(timeElapsed / duration, 1);
+        element.textContent = Math.floor(progress * (end - start) + start).toLocaleString();
+        if (progress < 1) {
+            requestAnimationFrame(animation);
+        }
+    }
+    requestAnimationFrame(animation);
+}
+
+
+// --- CONTACT PAGE SPECIFIC ---
+function initContactPage() {
+    const mapElement = document.getElementById('map');
+    if (mapElement && typeof L !== 'undefined') {
+        const lat = 25.2625; 
+        const lng = 55.2980;
         try {
-            const micorpLocation = [25.2675, 55.3084]; // Coordinates for Fahidi Heights (approx)
-            const map = L.map('map').setView(micorpLocation, 16);
-
+            var map = L.map('map').setView([lat, lng], 15);
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                maxZoom: 19,
+                attribution: '© OpenStreetMap contributors'
             }).addTo(map);
-
-            const micorpIcon = L.icon({
-                iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png', // Default Leaflet icon
-                iconSize: [25, 41],
-                iconAnchor: [12, 41],
-                popupAnchor: [1, -34],
-                shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
-                shadowSize: [41, 41]
-            });
-
-            L.marker(micorpLocation, { icon: micorpIcon })
-                .addTo(map)
-                .bindPopup(`
-                    <div style="text-align: center; font-family: var(--font-primary);">
-                        <strong style="color: var(--primary-color); font-size: 1.1em;">Micorp Trading LLC</strong><br>
-                        <small>Office No. 709, Fahidi Heights<br>Al Hamriya, Bur Dubai, Dubai, UAE</small><br>
-                        <a href="https://www.google.com/maps/search/?api=1&query=25.2675,55.3084" target="_blank" style="color: var(--primary-dark); text-decoration: underline; font-weight: 500;">
-                            Get Directions
-                        </a>
-                    </div>
-                `)
+            L.marker([lat, lng]).addTo(map)
+                .bindPopup('<b>Micorp Trading LLC</b><br>Office 709, Fahidi Heights<br>Al Hamriya, Bur Dubai')
                 .openPopup();
-        } catch (e) {
-            console.error("Error initializing Leaflet map. Make sure Leaflet library is loaded.", e);
-            const mapDiv = document.getElementById('map');
-            if (mapDiv) {
-                mapDiv.innerHTML = "<p style='text-align:center; padding-top: 50px;'>Map could not be loaded. Please check your internet connection or contact support.</p>";
-            }
+        } catch(e) {
+            console.error("Error initializing Leaflet map:", e);
+            mapElement.innerHTML = "<p style='color:red; text-align:center;'>Map could not be loaded.</p>";
         }
     }
 
-    // Stats Counter Animation (Why Choose Us Page)
-    const statNumbers = document.querySelectorAll('.stat-number');
-    const animateStat = (element) => {
-        const target = +element.getAttribute('data-count');
-        const duration = 1500; // 1.5 seconds
-        const frameDuration = 1000 / 60; // 60 FPS
-        const totalFrames = Math.round(duration / frameDuration);
-        let frame = 0;
-
-        const counter = setInterval(() => {
-            frame++;
-            const progress = frame / totalFrames;
-            const currentCount = Math.round(target * progress);
-            
-            element.textContent = currentCount;
-
-            if (frame === totalFrames) {
-                clearInterval(counter);
-                element.textContent = target; // Ensure final value is exact
-            }
-        }, frameDuration);
-    };
-
-    const statObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                animateStat(entry.target);
-                observer.unobserve(entry.target);
-            }
+    const faqItems = document.querySelectorAll('.contact-page .faq-item button.faq-question');
+    faqItems.forEach(button => {
+        button.addEventListener('click', () => {
+            const answer = button.nextElementSibling;
+            const isExpanded = button.getAttribute('aria-expanded') === 'true';
+            button.setAttribute('aria-expanded', !isExpanded ? 'true' : 'false');
+            button.classList.toggle('active');
+            answer.classList.toggle('show');
+            answer.style.maxHeight = !isExpanded ? answer.scrollHeight + "px" : null;
         });
-    }, { threshold: 0.5 });
-
-    statNumbers.forEach(stat => {
-        statObserver.observe(stat);
     });
 
-});
+    const urlParams = new URLSearchParams(window.location.search);
+    const subjectParam = urlParams.get('subject');
+    const subjectSelect = document.getElementById('subject');
+    if (subjectParam && subjectSelect && subjectSelect.querySelector(`option[value="${subjectParam}"]`)) {
+        subjectSelect.value = subjectParam;
+    }
+    
+    const contactForm = document.getElementById('contactForm');
+    if (contactForm && contactForm.action && contactForm.action.includes('formspree.io')) {
+        contactForm.addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const formData = new FormData(contactForm);
+            const submitButton = contactForm.querySelector('button[type="submit"]');
+            const originalButtonText = submitButton.textContent;
+            submitButton.disabled = true;
+            submitButton.textContent = 'Sending...';
+
+            try {
+                const response = await fetch(contactForm.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: { 'Accept': 'application/json' }
+                });
+                if (response.ok) {
+                    alert("Thank you for your message! We'll be in touch soon.");
+                    contactForm.reset();
+                    if (subjectParam && subjectSelect && subjectSelect.querySelector(`option[value="${subjectParam}"]`)) {
+                        subjectSelect.value = subjectParam;
+                    }
+                } else {
+                    const errorData = await response.json().catch(() => ({ error: "Failed to parse server error response." }));
+                    let errorMessage = "Oops! There was a problem submitting your form.";
+                    if (errorData && errorData.errors && Array.isArray(errorData.errors)) errorMessage += "\nDetails: " + errorData.errors.map(e => e.message || 'Unknown error').join(", ");
+                    else if (errorData && errorData.error) errorMessage += " Details: " + errorData.error;
+                    alert(errorMessage  + " Please try again or contact us directly.");
+                }
+            } catch (error) {
+                alert("An error occurred while sending your message. Please try again or contact us directly.");
+            } finally {
+                submitButton.disabled = false;
+                submitButton.textContent = originalButtonText;
+            }
+        });
+    }
+}
