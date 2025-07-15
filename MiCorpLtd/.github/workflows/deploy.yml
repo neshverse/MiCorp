@@ -1,36 +1,35 @@
 # Name of your workflow
-name: Deploy Website to cPanel via SSH
+name: Deploy Website via SSH
 
-# This runs the workflow when you push to the 'main' branch
+# Trigger the workflow on a push to the 'main' branch
 on:
   push:
     branches:
       - main
 
+# Define the jobs to run
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     steps:
-      # Step 1: Checks out your repository's code so the workflow can use it.
-      - name: Checkout repository code
+      # 1. Checkout your repository code
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      # Step 2: Sets up the SSH connection using your private key from secrets.
-      - name: Install SSH Private Key
+      # 2. Setup SSH Key
+      - name: Install SSH Key
         uses: shimataro/ssh-key-action@v2
         with:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          known_hosts: "just-a-placeholder-so-we-can-disable-strict-host-key-checking"
+          known_hosts: 'just-a-placeholder-so-we-can-disable-strict-host-key-checking'
 
-      # Step 3: Uses rsync to sync your files to the server.
-      - name: Sync files to server with rsync
+      # 3. Deploy with rsync
+      - name: Deploy files
         run: |
-          # This is the command that performs the deployment.
-          # It connects to your server using the user and host from your secrets.
-          # IMPORTANT: The path at the end `public_html/` is the destination on your server.
-          # If your website is in a subfolder, change it here. e.g., `public_html/my-site/`
+          # The key is this last line: it specifies the destination folder as 'public_html/'
           rsync -avz --delete \
             --exclude '.git' \
             --exclude '.github' \
             -e "ssh -o StrictHostKeyChecking=no" \
-            ./ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:public_html/MiCorp
+            ./ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:public_html/
