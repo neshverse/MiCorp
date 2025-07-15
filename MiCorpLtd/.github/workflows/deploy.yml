@@ -33,4 +33,4 @@ jobs:
             --exclude '.git' \
             --exclude '.github' \
             -e "ssh -o StrictHostKeyChecking=no" \
-            ./ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:public_html/
+            ./ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:public_html/MiCorp
