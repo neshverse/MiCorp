@@ -1,37 +1,86 @@
-# Name of the workflow
+# ------------------------------------------------------------------
+#          GitHub Actions Workflow: Deploy Website to cPanel
+# ------------------------------------------------------------------
+# This workflow automates the process of deploying the website from
+# the 'main' branch of this GitHub repository to a live cPanel server.
+#
+# How it works:
+# 1. Trigger: It runs automatically every time new code is pushed
+#             to the 'main' branch.
+# 2. Setup: It uses a dedicated deployment action that securely
+#           connects via SFTP (using your SSH key).
+# 3. Sync: It efficiently transfers only the changed files from
+#          the repository to the specified directory on the cPanel
+#          server (e.g., public_html).
+#
+# ------------------------------------------------------------------
+
 name: Deploy Website to cPanel
 
-# Trigger on push to the 'main' branch
+# -------------------------------------------------
+#         UPDATE THESE VALUES
+# -------------------------------------------------
+env:
+  REMOTE_HOST: "92.205.191.221"          # <-- Replace with your server's IP or domain
+  REMOTE_USER: "micorptrd"           # <-- Replace with your cPanel username
+  REMOTE_PORT: "22"                  # <-- Replace with your SSH port (often 22 or another custom port)
+  REMOTE_TARGET_DIR: "public_html/MiCorp"        # <-- Replace with the destination folder on your server (e.g., public_html, or a subfolder)
+
+# -------------------------------------------------
+#                WORKFLOW TRIGGER
+# -------------------------------------------------
 on:
   push:
     branches:
       - main
 
-# Define the deployment job
+# -------------------------------------------------
+#                  DEPLOYMENT JOB
+# -------------------------------------------------
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
-      # Step 1: Checkout the repository's code
-      - name: Checkout code
+      # -------------------------------------------------
+      #   Step 1: Checkout Repository Code
+      # -------------------------------------------------
+      - name: Checkout repository code
         uses: actions/checkout@v4
 
-      # Step 2: Setup SSH agent with the private key
-      # This action prepares the environment for SSH commands
-      - name: Setup SSH agent
-        uses: webfactory/ssh-agent@v0.9.0
-        with:
-          # Use the same secret name as before
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-
-      # Step 3: Run the rsync command to sync files
-      # This is a separate step that uses the SSH connection prepared above
+      # -------------------------------------------------
+      #   Step 2: Sync Files to cPanel Server
+      # -------------------------------------------------
+      # This action handles the SFTP connection and file sync.
+      # It automatically uses SFTP when an SSH key is provided
+      # in the 'password' field.
       - name: Sync files to server
-        run: |
-          # The -e 'ssh -o StrictHostKeyChecking=no' part is no longer needed
-          # because the ssh-agent action handles the host keys for us.
-          rsync -avz --delete \
-            --exclude '.git*' \
-            --exclude '.github' \
-            ./ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:~/public_html/
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          # --- Server Connection Details ---
+          server: ${{ env.REMOTE_HOST }}
+          username: ${{ env.REMOTE_USER }}
+          # The action uses the SSH private key for SFTP authentication.
+          password: ${{ secrets.DEPLOY_KEY }} 
+          port: ${{ env.REMOTE_PORT }}
+          
+          # --- Deployment Path ---
+          # Source directory in the repo to sync from. '.' means the whole repo.
+          local-dir: ./ 
+          # Destination directory on the server.
+          server-dir: ${{ env.REMOTE_TARGET_DIR }}/
+          
+          # --- Sync Options ---
+          # FIXED: 'delete' parameter changed to 'dangerous-clean-slate'
+          # This deletes files on the server that are not in the repository.
+          dangerous-clean-slate: true 
+
+           # --- ADD THIS LINE ---
+          # Increases the timeout to 60 seconds (default is 30)
+          timeout: 60000 
+          
+          # --- Exclusions ---
+          # List of files/directories to exclude from the upload.
+          exclude: |
+            **/.git*
+            **/.github*
+            **/README.md
