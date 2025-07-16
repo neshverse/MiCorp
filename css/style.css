@@ -831,24 +831,24 @@ body.menu-open .site-header.is-on-home-page .menu-toggle.active span {
 .clients-page .testimonial-card .client-details.testimonial-author,
 .clients-page .testimonial-slide-item .client-details.testimonial-author {
     display: flex;
-    flex-direction: column; 
-    align-items: center;    
+    align-items: center;
     margin-top: 20px;
-    text-align: center;
-    gap: 10px;
-    width: 100%; 
+    gap: 15px;
+    width: 100%;
     padding-top: 15px;
     border-top: 1px solid var(--light-gray-color);
+    text-align: left;
 }
 .testimonial-author img,
 .clients-page .testimonial-card .client-photo,
 .clients-page .testimonial-slide-item .client-photo {
-    width: 70px;
-    height: 70px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
     object-fit: contain;
     border: 3px solid var(--primary-light);
-    margin-bottom: 5px; 
+    flex-shrink: 0;
+    margin-bottom: 0;
 }
 .testimonial-author h4,
 .clients-page .testimonial-card .client-details h4,
@@ -1119,8 +1119,18 @@ body.menu-open .site-header.is-on-home-page .menu-toggle.active span {
     color: var(--light-color);
     font-size: 1.5rem;
     cursor: pointer;
-    padding: 0 5px;
     line-height: 1;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border-radius: 50%;
+    transition: background-color 0.2s ease;
+}
+#chatbot-close:hover {
+    background-color: rgba(0, 0, 0, 0.15);
 }
 
 #chatbot-messages {
@@ -1386,18 +1396,56 @@ body.menu-open .site-header.is-on-home-page .menu-toggle.active span {
     cursor: pointer;
     border: none;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    transition: var(--transition);
+    transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
     background-color: var(--primary-color);
 }
 
 #chatbot-toggle:hover {
-    transform: scale(1.1);
     background-color: var(--primary-dark);
+    transform: scale(1.1);
+    box-shadow: 0 0 15px 5px rgba(0, 184, 212, 0.4);
 }
 
-.text-center { text-align: center !important; } 
-.mb-20 { margin-bottom: 20px !important; } 
-.mt-20 { margin-top: 20px !important; }
+/* CORRECT: This is the only welcome message style that should exist */
+.chatbot-welcome-message {
+    position: absolute;
+    bottom: 50%; 
+    right: calc(100% + 15px); 
+    transform: translateY(50%); 
+    width: max-content;
+    max-width: 200px;
+    background-color: var(--primary-color); /* Changed to primary color for consistency */
+    color: var(--light-color);
+    padding: 12px 18px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow-strong);
+    font-size: 0.95rem;
+    line-height: 1.4;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out, visibility 0.3s;
+    z-index: 998;
+}
+
+.chatbot-welcome-message.visible {
+    opacity: 1;
+    transform: translateY(50%) scale(1);
+    visibility: visible;
+}
+
+.chatbot-welcome-message::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 100%;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-left: 10px solid var(--primary-color);
+}
 
 
 /* =========================
@@ -1640,6 +1688,12 @@ body.menu-open .site-header.is-on-home-page .menu-toggle.active span {
         grid-template-columns: 1fr;
     }
 
+    .testimonial-author {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+    }
+    
     .process-steps {
         flex-direction: column;
         align-items: center;
@@ -1742,7 +1796,7 @@ body.menu-open .site-header.is-on-home-page .menu-toggle.active span {
     box-shadow: var(--box-shadow-strong);
     border-color: var(--primary-color); 
 }
-.clients-page .clients-show-static .client-logo img { 
+.clients-page .clients-showcase-static .client-logo img { 
     max-height: 80px;
     max-width: 180px;
     width: auto;

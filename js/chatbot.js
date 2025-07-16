@@ -20,6 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let conversationState = 'initial';
     let collectedData = {};
     let isBotTyping = false;
+    let tooltipTimeout; // To manage the tooltip display timer
 
     // --- Initial Bot Messages & Options ---
     const initialMessage = "Hello! I'm the Micorp Bot. How can I assist you today?";
@@ -29,17 +30,13 @@ document.addEventListener('DOMContentLoaded', () => {
         { text: "Leave a Message", value: "leave_message" }
     ];
 
-    // --- Utility Functions ---
+    // --- Utility Functions (Unchanged) ---
     const sanitizeHTML = (str) => {
         const temp = document.createElement('div');
         temp.textContent = str;
         return temp.innerHTML;
     };
-
-    const scrollToBottom = () => {
-        chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
-    };
-    
+    const scrollToBottom = () => { chatbotMessages.scrollTop = chatbotMessages.scrollHeight; };
     const setInputAreaDisabled = (disabled) => {
         chatbotInput.disabled = disabled;
         chatbotSend.disabled = disabled;
@@ -47,12 +44,11 @@ document.addEventListener('DOMContentLoaded', () => {
         inputArea.style.pointerEvents = disabled ? 'none' : 'auto';
     };
 
-    // --- Chatbot UI Functions ---
+    // --- Chatbot UI Functions (Unchanged) ---
     const addMessage = (text, sender, options = null) => {
         const messageDiv = document.createElement('div');
         messageDiv.classList.add('chatbot-message', sender);
-        messageDiv.innerHTML = text; // Assumes text is pre-sanitized or safe
-
+        messageDiv.innerHTML = text; 
         if (options && Array.isArray(options) && options.length > 0) {
             const optionsDiv = document.createElement('div');
             optionsDiv.classList.add('chatbot-options');
@@ -65,14 +61,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 optionsDiv.appendChild(button);
             });
             messageDiv.appendChild(optionsDiv);
-            setInputAreaDisabled(true); // Disable text input when options are present
+            setInputAreaDisabled(true);
         }
-        
         chatbotMessages.appendChild(messageDiv);
         scrollToBottom();
         return messageDiv;
     };
-    
     const showTypingIndicator = () => {
         if (isBotTyping) return;
         isBotTyping = true;
@@ -80,25 +74,19 @@ document.addEventListener('DOMContentLoaded', () => {
         typingDiv.classList.add('typing-indicator');
         return typingDiv;
     };
-
     const hideTypingIndicator = () => {
         const indicator = chatbotMessages.querySelector('.typing-indicator');
         if (indicator) indicator.remove();
         isBotTyping = false;
     };
-
     const addBotMessageWithTyping = (text, options = null) => {
         showTypingIndicator();
         setTimeout(() => {
             hideTypingIndicator();
             addMessage(text, 'bot', options);
-        }, 1000 + Math.random() * 500); // Simulate thinking time
+        }, 1000 + Math.random() * 500);
     };
-
-    const addUserMessage = (text) => {
-        addMessage(sanitizeHTML(text), 'user');
-    };
-
+    const addUserMessage = (text) => { addMessage(sanitizeHTML(text), 'user'); };
     const restartConversation = () => {
         chatbotMessages.innerHTML = '';
         conversationState = 'initial';
@@ -106,9 +94,46 @@ document.addEventListener('DOMContentLoaded', () => {
         setInputAreaDisabled(true);
         addBotMessageWithTyping(initialMessage, initialOptions);
     };
+    
+    // --- Tooltip/Welcome Message Logic ---
+    const showWelcomeMessage = () => {
+        // Don't show if the chat window is open or a message already exists
+        if (chatbotWindow.classList.contains('active') || document.getElementById('chatbot-welcome-message')) {
+            return;
+        }
+        
+        const fabContainer = chatbotToggle.parentElement;
+        const welcomeMessage = document.createElement('div');
+        welcomeMessage.id = 'chatbot-welcome-message';
+        welcomeMessage.className = 'chatbot-welcome-message';
+        welcomeMessage.innerHTML = '<p>Hi! How can I help you?</p>';
+        fabContainer.prepend(welcomeMessage);
+        
+        // Use a short timeout to allow CSS transitions to apply
+        setTimeout(() => welcomeMessage.classList.add('visible'), 10);
+    };
+
+    const hideWelcomeMessage = () => {
+        const msg = document.getElementById('chatbot-welcome-message');
+        if (msg) {
+            msg.classList.remove('visible');
+            msg.addEventListener('transitionend', () => msg.remove(), { once: true });
+        }
+    };
 
     // --- Event Handlers ---
+    chatbotToggle.addEventListener('mouseenter', () => {
+        if (!chatbotWindow.classList.contains('active')) {
+            showWelcomeMessage();
+        }
+    });
+
+    chatbotToggle.addEventListener('mouseleave', () => {
+        hideWelcomeMessage();
+    });
+
     chatbotToggle.addEventListener('click', () => {
+        hideWelcomeMessage(); // Ensure the message is hidden when opening the chat
         const isActive = chatbotWindow.classList.toggle('active');
         chatbotToggle.setAttribute('aria-expanded', isActive);
         if (isActive && chatbotMessages.children.length === 0) {
@@ -140,15 +165,13 @@ document.addEventListener('DOMContentLoaded', () => {
         processUserInput(value);
     };
     
-    // --- Conversation Logic ---
+    // --- Conversation Logic & Backend Submission (Unchanged) ---
     const processUserInput = (input) => {
         const lowerInput = input.toLowerCase();
-
         if (lowerInput === 'restart' || lowerInput === 'start over') {
             restartConversation();
             return;
         }
-
         switch (conversationState) {
             case 'initial':
                 if (lowerInput === 'whatsapp') {
@@ -160,13 +183,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     conversationState = 'ask_name';
                 }
                 break;
-
             case 'ask_name':
                 collectedData.name = input;
                 addBotMessageWithTyping(`Thanks, ${sanitizeHTML(collectedData.name)}. What is your email address?`);
                 conversationState = 'ask_email';
                 break;
-
             case 'ask_email':
                 if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input)) {
                     collectedData.email = input;
@@ -176,7 +197,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     addBotMessageWithTyping("That doesn't look like a valid email. Please enter a correct email address.");
                 }
                 break;
-
             case 'collect_message':
                 collectedData.message = input;
                 const summary = `Thank you! Please review the information below:<br><br>
@@ -189,7 +209,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 ]);
                 conversationState = 'confirm_submission';
                 break;
-
             case 'confirm_submission':
                 if (lowerInput === 'submit') {
                     sendDataToBackend(collectedData);
@@ -198,19 +217,15 @@ document.addEventListener('DOMContentLoaded', () => {
                     setTimeout(restartConversation, 1500);
                 }
                 break;
-                
             case 'finished':
                 addBotMessageWithTyping("Is there anything else I can help you with?", [{ text: 'Start a New Inquiry', value: 'restart' }]);
                 break;
         }
     };
-
-    // --- Backend Submission ---
     async function sendDataToBackend(data) {
         setInputAreaDisabled(true);
         const submissionMessage = addMessage("<i>Submitting your request...</i>", 'bot');
-        const formspreeEndpoint = 'https://formspree.io/f/meokpzlj'; // CHATBOT LEADS ENDPOINT
-
+        const formspreeEndpoint = 'https://formspree.io/f/meokpzlj';
         const formDataForSpree = new FormData();
         formDataForSpree.append('_subject', `New Chatbot Lead: ${data.inquiryType}`);
         formDataForSpree.append('Name', data.name);
@@ -219,35 +234,18 @@ document.addEventListener('DOMContentLoaded', () => {
         formDataForSpree.append('Inquiry Type', data.inquiryType);
         formDataForSpree.append('Message', data.message);
         formDataForSpree.append('_Source Page', window.location.href);
-
         let success = false;
         try {
-            const response = await fetch(formspreeEndpoint, {
-                method: 'POST',
-                body: formDataForSpree,
-                headers: { 'Accept': 'application/json' }
-            });
-            if (response.ok) {
-                success = true;
-            } else {
-                // For debugging: log the error response from Formspree
-                const errorData = await response.json();
-                console.error("Formspree submission failed:", errorData);
-            }
-        } catch (error) {
-            console.error('Network error during submission:', error);
-        }
-
-        // --- UI Update after fetch completes ---
-        submissionMessage.remove(); // Remove the "Submitting..." message
-
+            const response = await fetch(formspreeEndpoint, { method: 'POST', body: formDataForSpree, headers: { 'Accept': 'application/json' } });
+            if (response.ok) success = true;
+            else { const errorData = await response.json(); console.error("Formspree submission failed:", errorData); }
+        } catch (error) { console.error('Network error during submission:', error); }
+        submissionMessage.remove(); 
         if (success) {
             addMessage(`✅ Success! Your message has been sent. Our team will get back to you at ${sanitizeHTML(data.email)} soon.`, 'bot');
         } else {
-            addMessage("❌ Apologies, there was an error sending your message. This can happen if the form is not yet confirmed. Please try again or contact us directly via phone or email.", 'bot');
+            addMessage("❌ Apologies, there was an error sending your message. Please try again or contact us directly via phone or email.", 'bot');
         }
-
-        // Offer to restart after a short delay
         setTimeout(() => {
             addBotMessageWithTyping("Is there anything else I can assist with?", [{ text: 'Start New Inquiry', value: 'restart' }]);
             conversationState = 'finished';
