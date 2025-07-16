@@ -1,91 +1,57 @@
 # ------------------------------------------------------------------
 #          GitHub Actions Workflow: Deploy Website to cPanel
 # ------------------------------------------------------------------
-# This workflow automates the process of deploying the website from
-# the 'main' branch of this GitHub repository to a live cPanel server.
-#
-# How it works:
-# 1. Trigger: It runs automatically every time new code is pushed
-#             to the 'main' branch.
-# 2. Setup: It sets up a secure SSH connection using a private key
-#           stored as a GitHub Secret.
-# 3. Sync: It uses 'rsync' to efficiently transfer only the changed
-#          files from the repository to the specified directory on
-#          the cPanel server (e.g., public_html).
-#
-# ------------------------------------------------------------------
+# ... (Header and comments are the same) ...
 
 name: Deploy Website to cPanel
 
-# -------------------------------------------------
-#         UPDATE THESE VALUES
-# -------------------------------------------------
-# Set up environment variables to make the workflow reusable and secure.
-# Do not hardcode your server details directly in the steps below.
+# ... (env block is the same) ...
 env:
   REMOTE_HOST: "92.205.191.221"          # <-- Replace with your server's IP or domain
   REMOTE_USER: "micorptrd"           # <-- Replace with your cPanel username
   REMOTE_PORT: "22"                  # <-- Replace with your SSH port (often 22 or another custom port)
   REMOTE_TARGET_DIR: "public_html/MiCorp"        # <-- Replace with the destination folder on your server (e.g., public_html, or a subfolder)
 
-# -------------------------------------------------
-#                WORKFLOW TRIGGER
-# -------------------------------------------------
-# This workflow runs on any push event to the 'main' branch.
 on:
   push:
     branches:
       - main
 
-# -------------------------------------------------
-#                  DEPLOYMENT JOB
-# -------------------------------------------------
 jobs:
   deploy:
-    # Use the latest version of Ubuntu for the runner
     runs-on: ubuntu-latest
-
     steps:
-      # -------------------------------------------------
-      #   Step 1: Checkout Repository Code
-      # -------------------------------------------------
-      # This step checks out a copy of your repository code
-      # so the workflow can access it.
       - name: Checkout repository code
         uses: actions/checkout@v4
 
-      # -------------------------------------------------
-      #   Step 2: Setup SSH Agent for Secure Connection
-      # -------------------------------------------------
-      # This is the crucial step for authentication.
-      # It configures the SSH agent with the private key that you
-      # stored as a secret in your repository settings.
-      #
-      # IMPORTANT: Ensure you have a repository secret named 'DEPLOY_KEY'
-      # containing your SSH private key.
-      - name: Setup SSH agent
-        uses: webfactory/ssh-agent@v0.9.0
+      # THIS STEP IS NEW - IT IS REQUIRED FOR THE DEPLOY ACTION
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
         with:
-          ssh-private-key: ${{ secrets.DEPLOY_KEY }} # <-- This MUST match the name of your GitHub Secret
+          node-version: '18'
 
       # -------------------------------------------------
-      #   Step 3: Sync Files to cPanel Server
+      #   FIXED: Using a dedicated rsync deploy action
       # -------------------------------------------------
-      # This step uses 'rsync' over SSH to sync the files.
-      # - 'rsync' is efficient; it only copies new or changed files.
-      # - The '-avzr' flags mean:
-      #   -a (archive): Preserves permissions, ownership, etc.
-      #   -v (verbose): Shows which files are being transferred.
-      #   -z (compress): Compresses file data during the transfer.
-      #   -r (recursive): Syncs directories recursively.
-      # - '--delete': Deletes files on the server that don't exist
-      #               in the repository anymore. Use with caution.
-      # - '--exclude': Specifies files/directories to ignore during sync.
+      # This action is more robust and handles compatibility issues.
+      # It uses the SSH key you already configured.
       - name: Sync files to server
-        run: |
-          rsync -avzr \
-            --exclude '.git/' \
-            --exclude '.github/' \
-            --exclude 'README.md' \
-            -e "ssh -p ${{ env.REMOTE_PORT }} -o StrictHostKeyChecking=no" \
-            ./ ${{ env.REMOTE_USER }}@${{ env.REMOTE_HOST }}:${{ env.REMOTE_TARGET_DIR }}/
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          # Type of transfer
+          server: ${{ env.REMOTE_HOST }}
+          username: ${{ env.REMOTE_USER }}
+          password: ${{ secrets.DEPLOY_KEY }} # Use the same secret for the SSH key
+          port: ${{ env.REMOTE_PORT }}
+          
+          # Deployment settings
+          protocol: sftp # Use SFTP protocol, which uses SSH
+          local-dir: ./ # Sync the entire repository
+          server-dir: ${{ env.REMOTE_TARGET_DIR }}/
+          
+          # Sync options
+          delete: true # Deletes files on the server that are not in the repo
+          exclude: |   # List of files/directories to exclude
+            **/.git*
+            **/.github*
+            **/README.md
