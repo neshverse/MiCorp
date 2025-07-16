@@ -73,6 +73,10 @@ jobs:
           # FIXED: 'delete' parameter changed to 'dangerous-clean-slate'
           # This deletes files on the server that are not in the repository.
           dangerous-clean-slate: true 
+
+           # --- ADD THIS LINE ---
+          # Increases the timeout to 60 seconds (default is 30)
+          timeout: 60000 
           
           # --- Exclusions ---
           # List of files/directories to exclude from the upload.
