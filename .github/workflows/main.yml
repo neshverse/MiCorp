@@ -18,18 +18,19 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      - name: Verify SSH connection
-        run: |
-          ssh -T -p ${{ secrets.PORT }} \
-              -o StrictHostKeyChecking=no \
-              -o ConnectTimeout=15 \
-              ${{ secrets.USERNAME }}@${{ secrets.HOST }} exit
-          echo "SSH connection verified successfully"
+      - name: Create deployment archive
+        run: tar -czf site.tar.gz .
 
-      - name: Deploy files
+      - name: Upload and extract archive
         run: |
-          rsync -avz --delete \
-            -e "ssh -p ${{ secrets.PORT }} -o StrictHostKeyChecking=no -T -o LogLevel=ERROR" \
-            --rsync-path="env -i /usr/bin/rsync" \
-            ./ \
-            ${{ secrets.USERNAME }}@${{ secrets.HOST }}:~/public_html/
+          scp -P ${{ secrets.PORT }} \
+              -o StrictHostKeyChecking=no \
+              -o LogLevel=ERROR \
+              site.tar.gz \
+              ${{ secrets.USERNAME }}@${{ secrets.HOST }}:~/public_html/site.tar.gz
+          
+          ssh -p ${{ secrets.PORT }} \
+              -o StrictHostKeyChecking=no \
+              -o LogLevel=ERROR \
+              ${{ secrets.USERNAME }}@${{ secrets.HOST }} \
+              "cd ~/public_html && tar -xzf site.tar.gz --strip-components=1 && rm site.tar.gz"
