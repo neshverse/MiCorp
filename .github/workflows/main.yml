@@ -13,6 +13,7 @@ jobs:
     # Use a standard Ubuntu virtual machine from GitHub to run the job
     runs-on: ubuntu-latest
 
+    # The sequence of commands to execute
     steps:
       # Step 1: Check out the repository code onto the runner
       - name: Checkout code
@@ -22,11 +23,10 @@ jobs:
       - name: Install SSH Key
         uses: webfactory/ssh-agent@v0.7.0
         with:
-          # Use the secret named DEPLOY_KEY, as seen in your screenshot
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          # Use the secret named DEPLOY_KEY
+          ssh-private-key: ${{ secrets.DEPLOY_KEY }}
 
       # Step 3: Deploy files to cPanel using rsync over SSH
-      # This step includes '-vvv' for very verbose SSH logging to help debug connection issues.
       - name: Deploy files
         run: |
-          rsync -avz --delete -e "ssh -vvv -p ${{ secrets.PORT }} -o StrictHostKeyChecking=no" ./ ${{ secrets.USERNAME }}@${{ secrets.HOST }}:/home/micorptrd/public_html/```
+          rsync -avz --delete -e "ssh -vvv -p ${{ secrets.PORT }} -o StrictHostKeyChecking=no" ./ ${{ secrets.USERNAME }}@${{ secrets.HOST }}:/home/micorptrd/public_html/
