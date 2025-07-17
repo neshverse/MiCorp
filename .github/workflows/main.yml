@@ -24,7 +24,7 @@ jobs:
         uses: webfactory/ssh-agent@v0.7.0
         with:
           # Use the secret named DEPLOY_KEY
-          ssh-private-key: ${{ secrets.DEPLOY_KEY }}
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
       # Step 3: Deploy files to cPanel using rsync over SSH
       - name: Deploy files
