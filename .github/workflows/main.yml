@@ -18,10 +18,18 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
+      - name: Verify SSH connection
+        run: |
+          ssh -T -p ${{ secrets.PORT }} \
+              -o StrictHostKeyChecking=no \
+              -o ConnectTimeout=15 \
+              ${{ secrets.USERNAME }}@${{ secrets.HOST }} exit
+          echo "SSH connection verified successfully"
+
       - name: Deploy files
         run: |
           rsync -avz --delete \
-            -e "ssh -p ${{ secrets.PORT }} -o StrictHostKeyChecking=no -o LogLevel=ERROR -T" \
-            --rsync-path="rsync --quiet" \
+            -e "ssh -p ${{ secrets.PORT }} -o StrictHostKeyChecking=no -T -o LogLevel=ERROR" \
+            --rsync-path="env -i /usr/bin/rsync" \
             ./ \
             ${{ secrets.USERNAME }}@${{ secrets.HOST }}:~/public_html/
