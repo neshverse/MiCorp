@@ -19,14 +19,23 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Step 2: Install the SSH private key from GitHub Secrets
+      # STEP 2: TEMPORARY DEBUGGING STEP
+      # This step will print the secrets to the log so we can verify them.
+      - name: Debug Secrets
+        run: |
+          echo "Username is: ${{ secrets.USERNAME }}"
+          echo "Host is: ${{ secrets.HOST }}"
+          echo "Port is: ${{ secrets.PORT }}"
+          echo "Is Private Key Set? ${{ secrets.SSH_PRIVATE_KEY != '' }}"
+
+      # Step 3: Install the SSH private key from GitHub Secrets
       - name: Install SSH Key
         uses: webfactory/ssh-agent@v0.7.0
         with:
           # Use the secret named SSH_PRIVATE_KEY
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      # Step 3: Deploy files to cPanel using rsync over SSH
+      # Step 4: Deploy files to cPanel using rsync over SSH
       - name: Deploy files
         run: |
           rsync -avz --delete -e "ssh -vvv -p ${{ secrets.PORT }} -o StrictHostKeyChecking=no" ./ ${{ secrets.USERNAME }}@${{ secrets.HOST }}:~/public_html/
