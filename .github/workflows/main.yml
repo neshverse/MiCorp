@@ -38,4 +38,4 @@ jobs:
       # Step 4: Deploy files to cPanel using rsync over SSH
       - name: Deploy files
         run: |
-          rsync -avz --delete -e "ssh -vvv -p ${{ secrets.PORT }} -o StrictHostKeyChecking=no" ./ ${{ secrets.USERNAME }}@${{ secrets.HOST }}:~/public_html/
+          rsync -avz --delete -e "ssh -vvv -p ${{ secrets.PORT }} -o StrictHostKeyChecking=no" ./ ${{ secrets.USERNAME }}@${{ secrets.HOST }}:/home/micorptrd/public_html/
