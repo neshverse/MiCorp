@@ -12,25 +12,21 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+        with:
+          # This ensures we have a clean state
+          fetch-depth: 0
+          # Persist files between steps
+          path: site-content
 
       - name: Install SSH Key
         uses: webfactory/ssh-agent@v0.7.0
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      - name: Create deployment archive
-        run: tar -czf site.tar.gz .
-
-      - name: Upload and extract archive
+      - name: Deploy via rsync with clean environment
         run: |
-          scp -P ${{ secrets.PORT }} \
-              -o StrictHostKeyChecking=no \
-              -o LogLevel=ERROR \
-              site.tar.gz \
-              ${{ secrets.USERNAME }}@${{ secrets.HOST }}:~/public_html/site.tar.gz
-          
-          ssh -p ${{ secrets.PORT }} \
-              -o StrictHostKeyChecking=no \
-              -o LogLevel=ERROR \
-              ${{ secrets.USERNAME }}@${{ secrets.HOST }} \
-              "cd ~/public_html && tar -xzf site.tar.gz --strip-components=1 && rm site.tar.gz"
+          rsync -avz --delete \
+            -e "ssh -p ${{ secrets.PORT }} -o StrictHostKeyChecking=no -T" \
+            --rsync-path="exec /usr/bin/env -i RSYNC_PASSWORD='' /usr/bin/rsync" \
+            site-content/ \
+            ${{ secrets.USERNAME }}@${{ secrets.HOST }}:~/public_html/
