@@ -1,86 +1,30 @@
-# ------------------------------------------------------------------
-#          GitHub Actions Workflow: Deploy Website to cPanel
-# ------------------------------------------------------------------
-# This workflow automates the process of deploying the website from
-# the 'main' branch of this GitHub repository to a live cPanel server.
-#
-# How it works:
-# 1. Trigger: It runs automatically every time new code is pushed
-#             to the 'main' branch.
-# 2. Setup: It uses a dedicated deployment action that securely
-#           connects via SFTP (using your SSH key).
-# 3. Sync: It efficiently transfers only the changed files from
-#          the repository to the specified directory on the cPanel
-#          server (e.g., public_html).
-#
-# ------------------------------------------------------------------
-
+# A descriptive name for your workflow
 name: Deploy Website to cPanel
 
-# -------------------------------------------------
-#         UPDATE THESE VALUES
-# -------------------------------------------------
-env:
-  REMOTE_HOST: "92.205.191.221"          # <-- Replace with your server's IP or domain
-  REMOTE_USER: "micorptrd"           # <-- Replace with your cPanel username
-  REMOTE_PORT: "22"                  # <-- Replace with your SSH port (often 22 or another custom port)
-  REMOTE_TARGET_DIR: "public_html/MiCorp"        # <-- Replace with the destination folder on your server (e.g., public_html, or a subfolder)
-
-# -------------------------------------------------
-#                WORKFLOW TRIGGER
-# -------------------------------------------------
+# This workflow runs on every push to the 'main' branch
 on:
   push:
     branches:
       - main
 
-# -------------------------------------------------
-#                  DEPLOYMENT JOB
-# -------------------------------------------------
+# Define the sequence of jobs to run
 jobs:
   deploy:
+    # Use a standard Ubuntu virtual machine from GitHub to run the job
     runs-on: ubuntu-latest
+
     steps:
-      # -------------------------------------------------
-      #   Step 1: Checkout Repository Code
-      # -------------------------------------------------
-      - name: Checkout repository code
-        uses: actions/checkout@v4
+      # Step 1: Check out the repository code onto the runner
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-      # -------------------------------------------------
-      #   Step 2: Sync Files to cPanel Server
-      # -------------------------------------------------
-      # This action handles the SFTP connection and file sync.
-      # It automatically uses SFTP when an SSH key is provided
-      # in the 'password' field.
-      - name: Sync files to server
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+      # Step 2: Install the SSH private key from GitHub Secrets
+      - name: Install SSH Key
+        uses: webfactory/ssh-agent@v0.7.0
         with:
-          # --- Server Connection Details ---
-          server: ${{ env.REMOTE_HOST }}
-          username: ${{ env.REMOTE_USER }}
-          # The action uses the SSH private key for SFTP authentication.
-          password: ${{ secrets.DEPLOY_KEY }} 
-          port: ${{ env.REMOTE_PORT }}
-          
-          # --- Deployment Path ---
-          # Source directory in the repo to sync from. '.' means the whole repo.
-          local-dir: ./ 
-          # Destination directory on the server.
-          server-dir: ${{ env.REMOTE_TARGET_DIR }}/
-          
-          # --- Sync Options ---
-          # FIXED: 'delete' parameter changed to 'dangerous-clean-slate'
-          # This deletes files on the server that are not in the repository.
-          dangerous-clean-slate: true 
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-           # --- ADD THIS LINE ---
-          # Increases the timeout to 60 seconds (default is 30)
-          timeout: 60000 
-          
-          # --- Exclusions ---
-          # List of files/directories to exclude from the upload.
-          exclude: |
-            **/.git*
-            **/.github*
-            **/README.md
+      # Step 3: Deploy files to cPanel using rsync over SSH
+      - name: Deploy files
+        run: |
+          rsync -avz --delete -e "ssh -p ${{ secrets.PORT }} -o StrictHostKeyChecking=no" ./ ${{ secrets.USERNAME }}@${{ secrets.HOST }}:/home/micorptrd/public_html/
