@@ -1,15 +1,27 @@
-      - name: Deploy via Git archive
+name: Deploy Website to cPanel
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install SSH Key
+        uses: webfactory/ssh-agent@v0.7.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Deploy files
         run: |
-          # Create archive of the repository
-          git archive --format=tar HEAD | gzip > site.tar.gz
-          
-          # Upload and extract
-          scp -P ${{ secrets.PORT }} \
-              -o StrictHostKeyChecking=no \
-              site.tar.gz \
-              ${{ secrets.USERNAME }}@${{ secrets.HOST }}:~/public_html/site.tar.gz
-          
-          ssh -p ${{ secrets.PORT }} \
-              -o StrictHostKeyChecking=no \
-              ${{ secrets.USERNAME }}@${{ secrets.HOST }} \
-              "cd ~/public_html && tar -xzf site.tar.gz --strip-components=1 && rm site.tar.gz"
+          rsync -avz --delete \
+            -e "ssh -p ${{ secrets.PORT }} -o StrictHostKeyChecking=no -T" \
+            --rsync-path="exec /bin/sh -c \"exec /usr/bin/rsync\"" \
+            ./ \
+            ${{ secrets.USERNAME }}@${{ secrets.HOST }}:~/public_html/
