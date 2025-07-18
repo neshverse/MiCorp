@@ -1,24 +1,12 @@
-<IfModule mod_rewrite.c>
-  RewriteEngine On
+RewriteEngine On
 
-  # IMPORTANT: This tells the server that all rules are relative to the /MiCorp/ folder.
-  RewriteBase /MiCorp/
+# 1. Externally redirect any request for a .html file to the clean URL
+# This rule only runs if the original browser request contained ".html"
+RewriteCond %{THE_REQUEST} \s/+(.+?)\.html[\s?] [NC]
+RewriteRule ^ /%1 [R=301,L,NE]
 
-  # SEO Redirect Rule: If someone types /MiCorp/pages/about.html...
-  RewriteCond %{THE_REQUEST} \s/MiCorp/pages/([^/]+)\.html\s [NC]
-  # ...redirect them to the clean /MiCorp/about URL.
-  RewriteRule ^ %1 [R=301,L]
-
-  # --- Safety Check to Prevent 500/404 Errors on Assets ---
-  # If the requested path is a real file (like /MiCorp/css/style.css)...
-  RewriteCond %{REQUEST_FILENAME} -f [OR]
-  # ...or a real directory...
-  RewriteCond %{REQUEST_FILENAME} -d
-  # ...then stop processing and serve that file directly.
-  RewriteRule ^ - [L]
-
-  # --- Final Routing Rule for SPA Pages ---
-  # If the request was for a virtual URL (like /MiCorp/about)...
-  # ...serve the main application shell from the correct path.
-  RewriteRule ^(.*)$ /MiCorp/pages/index.html [L]
-</IfModule>
+# 2. Internally rewrite the clean URL to the actual .html file path
+# This rule only runs if a file or directory with that name doesn't already exist
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^([^/.]+)$ $1.html [L]
