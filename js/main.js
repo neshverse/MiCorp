@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initCurrentYear();
     initFloatingActionButtons();
 
-    // PAGE-SPECIFIC INITIALIZATIONS
+    // PAGE-SPECIFIC INITIALIZATIONS (for initial load)
     if (document.body.classList.contains('contact-page')) {
         initContactPage();
     }
@@ -43,11 +43,20 @@ function initScrollBehaviors() {
     const fabContainer = document.querySelector('.floating-action-button');
     const chatbotWindow = document.getElementById('chatbot-window');
     const chatbotToggle = document.getElementById('chatbot-toggle');
-    const isHomePage = document.body.classList.contains('home-page');
     
-    if(isHomePage) {
-        siteHeader.classList.add('is-on-home-page');
-    }
+    // Set initial state based on body class
+    const setHeaderHomePageStatus = () => {
+        if (document.body.classList.contains('home-page')) {
+            siteHeader.classList.add('is-on-home-page');
+        } else {
+            siteHeader.classList.remove('is-on-home-page');
+        }
+    };
+    setHeaderHomePageStatus(); // Run on initial load
+
+    // Re-check on route change (SPA)
+    const observer = new MutationObserver(setHeaderHomePageStatus);
+    observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
 
     let lastScrollTop = 0;
     window.addEventListener('scroll', () => {
@@ -66,13 +75,14 @@ function initScrollBehaviors() {
         }
         
         // Hide/show on scroll logic for header and FAB
+        const isCurrentlyHomePage = document.body.classList.contains('home-page');
         if (scrollTop > lastScrollTop && scrollTop > 100) {
             // Scrolling Down
-            if (!isHomePage) siteHeader.classList.add('hidden'); // Hide header only on non-home pages
+            if (!isCurrentlyHomePage) siteHeader.classList.add('hidden'); // Hide header only on non-home pages
             if (fabContainer) fabContainer.classList.add('hidden');
         } else {
             // Scrolling Up
-            if (!isHomePage) siteHeader.classList.remove('hidden');
+            if (!isCurrentlyHomePage) siteHeader.classList.remove('hidden');
             if (fabContainer) fabContainer.classList.remove('hidden');
         }
         
@@ -138,6 +148,10 @@ function animateCount(element, start, end, duration) {
 function initContactPage() {
     const mapElement = document.getElementById('map');
     if (mapElement && typeof L !== 'undefined') {
+        // Clear previous map instance if it exists
+        if (mapElement._leaflet_id) {
+            mapElement._leaflet_id = null;
+        }
         const lat = 25.2625; 
         const lng = 55.2980;
         try {
@@ -163,7 +177,11 @@ function initContactPage() {
             button.setAttribute('aria-expanded', !isExpanded ? 'true' : 'false');
             button.classList.toggle('active');
             answer.classList.toggle('show');
-            answer.style.maxHeight = !isExpanded ? answer.scrollHeight + "px" : null;
+            if (answer.classList.contains('show')) {
+                 answer.style.maxHeight = answer.scrollHeight + "px";
+            } else {
+                answer.style.maxHeight = null;
+            }
         });
     });
 

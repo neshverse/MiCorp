@@ -1,22 +1,23 @@
-const CACHE_NAME = 'micorp-cache-v16'; // Incremented version to force update
+const CACHE_NAME = 'micorp-cache-v17'; // Incremented version to force update
 const urlsToCache = [
-  // HTML Pages (Absolute paths from root)
-  '/pages/index.html',
-  '/pages/about.html',
-  '/pages/products.html',
-  '/pages/it-products.html',
-  '/pages/automobiles.html',
-  '/pages/food-stuff.html',
-  '/pages/why-choose-us.html',
-  '/pages/clients.html',
-  '/pages/contact.html',
+  // HTML Page Shells (FIXED: Absolute paths from root, no /pages/ directory)
+  '/index.html',
+  '/about.html',
+  '/products.html',
+  '/it-products.html',
+  '/automobiles.html',
+  '/food-stuff.html',
+  '/why-choose-us.html',
+  '/clients.html',
+  '/contact.html',
   
   // CSS and JS files (Absolute paths from root)
-  '/css/style.css',
-  '/css/animations.css',
-  '/js/main.js',
-  '/js/animations.js',
-  '/js/chatbot.js',
+  '/css/style.css?v=1.8',
+  '/css/animations.css?v=1.8',
+  '/js/main.js?v=1.8',
+  '/js/animations.js?v=1.8',
+  '/js/chatbot.js?v=1.8',
+  '/js/router.js?v=1.8',
   '/manifest.json',
 
   // Core Logos & PWA Icons (Absolute paths from root)
@@ -78,7 +79,6 @@ const urlsToCache = [
   '/assets/images/it-products/Enterprise servers.jpg',
   '/assets/images/it-products/storage systems.jpg',
   '/assets/images/it-products/Backup and recovery.jpg',
-  '/assets/images/it-products/Enterprise Software.jpg',
 
   // Automobile Images (Absolute paths from root)
   '/assets/images/Automotive Solutions/Automobiles_Hero.jpg',
@@ -107,7 +107,14 @@ self.addEventListener('install', event => {
     caches.open(CACHE_NAME)
       .then(cache => {
         console.log('Opened cache and caching core assets for version:', CACHE_NAME);
-        return cache.addAll(urlsToCache);
+        // Use { cache: 'reload' } for external resources to ensure they are fresh on install
+        const requests = urlsToCache.map(url => {
+          if (url.startsWith('http')) {
+            return new Request(url, { cache: 'reload' });
+          }
+          return url;
+        });
+        return cache.addAll(requests);
       })
       .catch(err => {
         console.error('Cache open/addAll failed during install:', err);
@@ -134,30 +141,33 @@ self.addEventListener('activate', event => {
 self.addEventListener('fetch', event => {
   const { request } = event;
 
+  // Ignore non-GET requests and requests to external services like Formspree
   if (request.method !== 'GET' || request.url.includes('formspree.io') || request.url.startsWith('chrome-extension://')) {
     event.respondWith(fetch(request));
     return;
   }
   
+  // Network-first for HTML navigation requests
   if (request.mode === 'navigate') {
     event.respondWith(
       fetch(request).catch(() => {
-        return caches.match(request).then(cachedResponse => {
-          // Fallback to the cached index page if the specific page isn't cached
-          return cachedResponse || caches.match('/pages/index.html');
-        });
+        // FIXED: If network fails, serve the main shell from cache (correct path)
+        return caches.match('/index.html');
       })
     );
     return;
   }
 
+  // Cache-first for all other static assets
   event.respondWith(
     caches.match(request)
       .then(cachedResponse => {
+        // If we have a cached response, return it
         if (cachedResponse) {
           return cachedResponse;
         }
 
+        // Otherwise, fetch from network, cache it, and return the response
         return fetch(request).then(networkResponse => {
           if (networkResponse && networkResponse.status === 200) {
             const responseToCache = networkResponse.clone();
