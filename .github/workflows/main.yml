@@ -22,6 +22,6 @@ jobs:
         run: |
           rsync -avz --delete \
             -e "ssh -p ${{ secrets.PORT }} -o StrictHostKeyChecking=no -T" \
-            --rsync-path="exec /bin/sh -c \"exec /usr/bin/rsync\"" \
+            --rsync-path="bash -c 'exec rsync'" \
             ./ \
             ${{ secrets.USERNAME }}@${{ secrets.HOST }}:~/public_html/
