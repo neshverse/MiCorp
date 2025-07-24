@@ -21,7 +21,7 @@ jobs:
       - name: Deploy files
         run: |
           rsync -avz --delete \
-          -e "ssh -p {0} -o StrictHostKeyChecking=no -Tq" \
-          --rsync-path="bash -c 'exec rsync'" \
+          -e "ssh -p $PORT -o StrictHostKeyChecking=no -Tq" \
+          --rsync-path="env -i /usr/bin/rsync" \
           ./ \
-          {1}@{2}:~/public_html/
+          $USERNAME@$HOST:~/public_html/
