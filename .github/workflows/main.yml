@@ -1,9 +1,9 @@
-name: Deploy Website to cPanel
+name: Deploy Website to cPanel (Production)
 
 on:
   push:
     branches:
-      - main
+      - Micorp-Production-Code
 
 jobs:
   deploy:
@@ -18,10 +18,25 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
+      - name: Verify SSH Connection
+        run: |
+          ssh -p ${{ secrets.PORT }} -T -o StrictHostKeyChecking=no \
+          ${{ secrets.USERNAME }}@${{ secrets.HOST }} \
+          "echo 'SSH connection successful'"
+
+      - name: Check Remote Rsync Version
+        run: |
+          ssh -p ${{ secrets.PORT }} -T -o StrictHostKeyChecking=no \
+          ${{ secrets.USERNAME }}@${{ secrets.HOST }} \
+          "rsync --version"
+
       - name: Deploy files
         run: |
           rsync -avz --delete \
-          -e "ssh -p $PORT -o StrictHostKeyChecking=no -Tq" \
-          --rsync-path="env -i /usr/bin/rsync" \
-          ./ \
-          $USERNAME@$HOST:~/public_html/
+            -e "ssh -p ${{ secrets.PORT }} -o StrictHostKeyChecking=no -Tq" \
+            --rsync-path="env -i /usr/bin/rsync" \
+            --no-motd \
+            --out-format='%n' \
+            ./ \
+            ${{ secrets.USERNAME }}@${{ secrets.HOST }}:~/public_html/
+        continue-on-error: false
