@@ -12,8 +12,11 @@
    9. Brand Carousel Styles
    10. Responsive Styles (ALL SIZES)
    11. Clients Page Styles
-   12. Food Stuff Page Specifics
-   13. Brand Grid Styles (Static)
+   12. Brand Grid Styles (Static)
+   13. Machinery Page Specifics (NEW)
+   14. Hardware Page Specifics (NEW)
+   15. Medical Equipment Page Specifics (NEW)
+   16. Furniture Page Specifics (NEW)
    ========================= */
 
 /* =========================
@@ -1818,27 +1821,9 @@ body.menu-open .site-header.is-on-home-page .menu-toggle.active span {
 }
 
 
-/* =========================
-   12. Food Stuff Page Specifics
-   ========================= */
-
-.food-intro-section {
-    background-color: var(--light-color);
-    padding-top: clamp(30px, 5vw, 50px);
-    padding-bottom: clamp(10px, 2vw, 20px);
-}
-
-.food-intro-section .section-header {
-    margin-bottom: 20px;
-}
-
-.food-stuff-page .product-card .product-info p {
-    min-height: 4em;
-}
-
 
 /* =========================
-   13. Brand Grid Styles (Static)
+   12. Brand Grid Styles (Static)
    ========================= */
 .brand-grid-section {
     padding: clamp(50px, 8vw, 80px) 0;
@@ -1879,4 +1864,78 @@ body.menu-open .site-header.is-on-home-page .menu-toggle.active span {
 
 .brand-grid-item:hover img {
     transform: scale(1.05);
+}
+
+/* =========================
+   13. Machinery Page Specifics (NEW)
+   ========================= */
+.machinery-page .page-hero .hero-background img {
+    /* Placeholder styles, assume image is available in the path from HTML */
+    object-position: center bottom;
+}
+
+.machinery-intro-section {
+    background-color: var(--light-gray-color);
+    padding-top: clamp(30px, 5vw, 50px);
+    padding-bottom: clamp(10px, 2vw, 20px);
+}
+
+.machinery-page .product-card .product-info p {
+    /* Ensures consistent card height for product descriptions */
+    min-height: 4em; 
+}
+
+
+/* =========================
+   14. Hardware Page Specifics (NEW)
+   ========================= */
+.hardware-page .page-hero .hero-background img {
+    /* Placeholder styles, assume image is available in the path from HTML */
+    object-position: center;
+}
+
+.hardware-intro-section {
+    background-color: var(--light-color);
+    padding-top: clamp(30px, 5vw, 50px);
+    padding-bottom: clamp(10px, 2vw, 20px);
+}
+
+.hardware-page .product-card .product-info p {
+    min-height: 4em; 
+}
+
+/* =========================
+   15. Medical Equipment Page Specifics (NEW)
+   ========================= */
+.medical-page .page-hero .hero-background img {
+    /* Placeholder styles, assume image is available in the path from HTML */
+    object-position: center top;
+}
+
+.medical-intro-section {
+    background-color: var(--light-gray-color);
+    padding-top: clamp(30px, 5vw, 50px);
+    padding-bottom: clamp(10px, 2vw, 20px);
+}
+
+.medical-page .product-card .product-info p {
+    min-height: 4em; 
+}
+
+/* =========================
+   16. Furniture Page Specifics (NEW)
+   ========================= */
+.furniture-page .page-hero .hero-background img {
+    /* Placeholder styles, assume image is available in the path from HTML */
+    object-position: center;
+}
+
+.furniture-intro-section {
+    background-color: var(--light-color);
+    padding-top: clamp(30px, 5vw, 50px);
+    padding-bottom: clamp(10px, 2vw, 20px);
+}
+
+.furniture-page .product-card .product-info p {
+    min-height: 4em; 
 }

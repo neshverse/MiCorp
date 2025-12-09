@@ -3,39 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Our Clients | Micorp Trading LLC</title>
-    <meta name="description" content="Discover the businesses that trust Micorp Trading LLC for quality products and services.">
-    
+    <title>Medical Equipment & Accessories | Micorp Trading LLC</title>
+    <meta name="description" content="Global supplier of certified medical equipment, accessories, and consumables for hospitals and clinics.">
     <link rel="stylesheet" href="../css/style.css?v=1.1">
     <link rel="stylesheet" href="../css/animations.css?v=1.1">
-    
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <link rel="manifest" href="../manifest.json">
+     <link rel="manifest" href="../manifest.json">
     <meta name="theme-color" content="#00b8d4">
     <link rel="apple-touch-icon" href="../assets/images/icons/icon-192x192.png">
     <link rel="icon" href="../assets/images/icons/icon-144x144.png">
-
-    <!-- Preload Important Assets -->
-    <link rel="preload" href="../assets/images/clients/ABS_logo.png" as="image">
-    <link rel="preload" href="../assets/images/clients/UAC_Logo.jpg" as="image">
-    <link rel="preload" href="../assets/images/clients/Bizpro_logo.png" as="image">
 </head>
-<body class="clients-page">
+<body class="medical-page products-page">
 
     <header class="site-header">
         <nav class="navbar">
             <div class="container">
-                <a href="index.html" class="logo"><img src="../assets/images/MiCORP_Logo.png" alt="Micorp Trading LLC Logo"></a>
-                <button class="menu-toggle" aria-label="Toggle Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+                <a href="index.html" class="logo">
+                    <img src="../assets/images/MiCORP_Logo.png" alt="Micorp Trading LLC Logo">
+                </a>
+                <button class="menu-toggle" aria-label="Toggle Menu" aria-expanded="false">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
                 <div class="nav-wrapper">
                     <ul class="nav-links">
                         <li><a href="index.html">Home</a></li>
                         <li><a href="about.html">About Us</a></li>
-                        <li><a href="products.html">Products & Services</a></li>
+                        <li><a href="products.html" class="active" aria-current="page">Products & Services</a></li>
                         <li><a href="why-choose-us.html">Why Choose Us</a></li>
-                        <li><a href="clients.html" class="active" aria-current="page">Clients</a></li>
+                        <li><a href="clients.html">Clients</a></li>
                         <li><a href="contact.html">Contact</a></li>
                     </ul>
                 </div>
@@ -44,32 +43,62 @@
     </header>
 
     <main>
-        <section class="page-hero clients-hero-simple">
-             <div class="hero-background"><img src="../assets/images/hero/Our Client.jpg" alt="Global partnerships backdrop."><div class="hero-overlay"></div></div>
+        <section class="page-hero">
+             <div class="hero-background">
+                 <img src="../assets/images/medical/Medical_Hero_Placeholder.jpg" alt="Advanced medical diagnostic equipment in a modern hospital setting.">
+                <div class="hero-overlay"></div>
+            </div>
             <div class="container">
-                <h1 class="hero-title reveal animate-text js-split">Our Valued Clients</h1> 
-                <p class="hero-subtitle reveal delay-1">We are proud to collaborate with a diverse range of industry leaders.</p> 
+                <h1 class="reveal animate-text js-split">Medical Equipment</h1>
+                <p class="reveal delay-1">Certified, high-standard equipment for healthcare providers worldwide</p>
             </div>
         </section>
 
-        <section class="clients-content-section section">
+        <section class="medical-intro-section">
             <div class="container">
                 <div class="section-header">
-                    <h2 class="reveal">Client Showcase</h2>
-                    <p class="reveal delay-1">A selection of organizations that partner with Micorp Trading.</p>
+                    <h2 class="reveal">Supplying Excellence in Healthcare</h2>
+                    <p class="reveal delay-1">We source and supply a wide range of state-of-the-art medical equipment, from diagnostic imaging systems to surgical instruments and essential consumables, ensuring quality and compliance.</p>
                 </div>
-                
-                <div id="clients-container-simple" class="clients-grid clients-showcase-static">
-                    <!-- Static Client Logos - Exactly 3 -->
-                    <!-- **FIXED CLASS** -->
-                    <div class="client-logo animate-scale">
-                        <img src="../assets/images/clients/ABS_logo.png" alt="ABS Solutions Logo">
+            </div>
+        </section>
+
+        <section id="categories" class="medical-category-section bg-light">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="reveal">Our Medical Product Lines</h2>
+                    <p class="reveal delay-1">Explore our high-quality, certified medical products.</p>
+                </div>
+                <div class="products-grid">
+                    <div class="product-card reveal">
+                        <div class="product-image">
+                             <img src="../assets/images/medical/Diagnostic_Img.png" alt="MRI or CT scanner machine.">
+                        </div>
+                        <div class="product-info">
+                            <h3>Diagnostic Equipment</h3>
+                            <p>Ultrasound machines, X-ray equipment, patient monitors, and laboratory analysis tools.</p>
+                            <a href="contact.html?subject=diagnostic_equipment_inquiry" class="btn btn-primary">Inquire Now</a>
+                        </div>
                     </div>
-                    <div class="client-logo animate-scale delay-1">
-                        <img src="../assets/images/clients/UAC_Logo.jpg" alt="United Africa Cargo (UAC) Logo">
+                    <div class="product-card reveal delay-1">
+                        <div class="product-image">
+                             <img src="../assets/images/medical/Surgical_Img.jpg" alt="A collection of surgical instruments."> 
+                        </div>
+                         <div class="product-info">
+                            <h3>Surgical & Operating Room</h3>
+                            <p>Surgical instruments, operating tables, sterilizers, and essential accessories for OR efficiency.</p>
+                            <a href="contact.html?subject=surgical_equipment_inquiry" class="btn btn-primary">Inquire Now</a>
+                        </div>
                     </div>
-                    <div class="client-logo animate-scale delay-2">
-                        <img src="../assets/images/clients/Bizpro_logo.png" alt="BizPro Consultants Logo">
+                    <div class="product-card reveal delay-2">
+                        <div class="product-image">
+                             <img src="../assets/images/medical/Consumables_Img.png" alt="Boxes of medical gloves, syringes, and face masks."> 
+                        </div>
+                        <div class="product-info">
+                            <h3>Consumables & Disposables</h3>
+                            <p>Gloves, syringes, wound care products, and other high-volume medical disposables.</p>
+                            <a href="contact.html?subject=consumables_inquiry" class="btn btn-primary">Inquire Now</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -77,12 +106,15 @@
 
         <section class="cta-section">
             <div class="container">
-                <div class="cta-content reveal"><h2>Become a Partner</h2><p>Let's discuss your needs and build a successful collaboration.</p><a href="contact.html" class="btn btn-primary">Contact Us Today</a></div>
+                <div class="cta-content reveal">
+                    <h2>Partner for Long-Term Supply</h2>
+                    <p>We ensure a reliable and consistent supply of medical products to keep your healthcare facility running smoothly.</p>
+                    <a href="contact.html" class="btn btn-primary">Request a Catalogue</a>
+                </div>
             </div>
         </section>
     </main>
 
-     <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <div class="footer-grid">
@@ -132,8 +164,7 @@
             </div>
         </div>
     </footer>
-  
-    <!-- Floating Action Buttons & Chatbot Window -->
+
     <div class="floating-action-button">
         <button id="chatbot-toggle" aria-label="Open Chat" aria-expanded="false">
             <i class="fas fa-comments"></i>
@@ -153,15 +184,19 @@
     </div>
 
     <script src="../js/main.js?v=1.1"></script>
-    <script src="../js/animations.js?v=1.1"></script> 
+    <script src="../js/animations.js?v=1.1"></script>
     <script src="../js/chatbot.js?v=1.1"></script> 
 
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('../sw.js')
-                    .then(reg => console.log('SW registered (clients.html).', reg))
-                    .catch(err => console.log('SW registration failed (clients.html):', err));
+                    .then(registration => {
+                        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                    })
+                    .catch(error => {
+                        console.log('ServiceWorker registration failed: ', error);
+                    });
             });
         }
     </script>

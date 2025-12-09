@@ -3,39 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Our Clients | Micorp Trading LLC</title>
-    <meta name="description" content="Discover the businesses that trust Micorp Trading LLC for quality products and services.">
-    
+    <title>Furniture & Interior Solutions | Micorp Trading LLC</title>
+    <meta name="description" content="Wholesale trading of high-quality office, commercial, and home furniture for bulk orders.">
     <link rel="stylesheet" href="../css/style.css?v=1.1">
     <link rel="stylesheet" href="../css/animations.css?v=1.1">
-    
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <link rel="manifest" href="../manifest.json">
+     <link rel="manifest" href="../manifest.json">
     <meta name="theme-color" content="#00b8d4">
     <link rel="apple-touch-icon" href="../assets/images/icons/icon-192x192.png">
     <link rel="icon" href="../assets/images/icons/icon-144x144.png">
-
-    <!-- Preload Important Assets -->
-    <link rel="preload" href="../assets/images/clients/ABS_logo.png" as="image">
-    <link rel="preload" href="../assets/images/clients/UAC_Logo.jpg" as="image">
-    <link rel="preload" href="../assets/images/clients/Bizpro_logo.png" as="image">
 </head>
-<body class="clients-page">
+<body class="furniture-page products-page">
 
     <header class="site-header">
         <nav class="navbar">
             <div class="container">
-                <a href="index.html" class="logo"><img src="../assets/images/MiCORP_Logo.png" alt="Micorp Trading LLC Logo"></a>
-                <button class="menu-toggle" aria-label="Toggle Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+                <a href="index.html" class="logo">
+                    <img src="../assets/images/MiCORP_Logo.png" alt="Micorp Trading LLC Logo">
+                </a>
+                <button class="menu-toggle" aria-label="Toggle Menu" aria-expanded="false">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
                 <div class="nav-wrapper">
                     <ul class="nav-links">
                         <li><a href="index.html">Home</a></li>
                         <li><a href="about.html">About Us</a></li>
-                        <li><a href="products.html">Products & Services</a></li>
+                        <li><a href="products.html" class="active" aria-current="page">Products & Services</a></li>
                         <li><a href="why-choose-us.html">Why Choose Us</a></li>
-                        <li><a href="clients.html" class="active" aria-current="page">Clients</a></li>
+                        <li><a href="clients.html">Clients</a></li>
                         <li><a href="contact.html">Contact</a></li>
                     </ul>
                 </div>
@@ -44,32 +43,62 @@
     </header>
 
     <main>
-        <section class="page-hero clients-hero-simple">
-             <div class="hero-background"><img src="../assets/images/hero/Our Client.jpg" alt="Global partnerships backdrop."><div class="hero-overlay"></div></div>
+        <section class="page-hero">
+             <div class="hero-background">
+                 <img src="../assets/images/furniture/Furniture_Hero_Placeholder.jpg" alt="Modern, well-lit office and commercial furniture setting.">
+                <div class="hero-overlay"></div>
+            </div>
             <div class="container">
-                <h1 class="hero-title reveal animate-text js-split">Our Valued Clients</h1> 
-                <p class="hero-subtitle reveal delay-1">We are proud to collaborate with a diverse range of industry leaders.</p> 
+                <h1 class="reveal animate-text js-split">Furniture & Interiors</h1>
+                <p class="reveal delay-1">High-quality, bulk furniture solutions for commercial and residential projects</p>
             </div>
         </section>
 
-        <section class="clients-content-section section">
+        <section class="furniture-intro-section">
             <div class="container">
                 <div class="section-header">
-                    <h2 class="reveal">Client Showcase</h2>
-                    <p class="reveal delay-1">A selection of organizations that partner with Micorp Trading.</p>
+                    <h2 class="reveal">Stylish and Durable Furniture Sourcing</h2>
+                    <p class="reveal delay-1">We specialize in the trade of modern, durable furniture, including office systems, hospitality fittings, and large-scale residential furnishings for wholesale and contract projects.</p>
                 </div>
-                
-                <div id="clients-container-simple" class="clients-grid clients-showcase-static">
-                    <!-- Static Client Logos - Exactly 3 -->
-                    <!-- **FIXED CLASS** -->
-                    <div class="client-logo animate-scale">
-                        <img src="../assets/images/clients/ABS_logo.png" alt="ABS Solutions Logo">
+            </div>
+        </section>
+
+        <section id="categories" class="furniture-category-section bg-light">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="reveal">Our Furniture Product Lines</h2>
+                    <p class="reveal delay-1">Explore our range of furniture designed for function and aesthetics.</p>
+                </div>
+                <div class="products-grid">
+                    <div class="product-card reveal">
+                        <div class="product-image">
+                             <img src="../assets/images/furniture/Office_Img.jpg" alt="Ergonomic office chairs and modular desks.">
+                        </div>
+                        <div class="product-info">
+                            <h3>Office Furniture</h3>
+                            <p>Ergonomic chairs, modular desks, storage solutions, and conference room setups for commercial spaces.</p>
+                            <a href="contact.html?subject=office_furniture_inquiry" class="btn btn-primary">Inquire Now</a>
+                        </div>
                     </div>
-                    <div class="client-logo animate-scale delay-1">
-                        <img src="../assets/images/clients/UAC_Logo.jpg" alt="United Africa Cargo (UAC) Logo">
+                    <div class="product-card reveal delay-1">
+                        <div class="product-image">
+                             <img src="../assets/images/furniture/Hospitality_Img.jpg" alt="Stylish tables and chairs in a modern restaurant or hotel lobby."> 
+                        </div>
+                         <div class="product-info">
+                            <h3>Hospitality & Commercial</h3>
+                            <p>Durable furniture for hotels, restaurants, cafes, and other high-traffic commercial environments.</p>
+                            <a href="contact.html?subject=hospitality_furniture_inquiry" class="btn btn-primary">Inquire Now</a>
+                        </div>
                     </div>
-                    <div class="client-logo animate-scale delay-2">
-                        <img src="../assets/images/clients/Bizpro_logo.png" alt="BizPro Consultants Logo">
+                    <div class="product-card reveal delay-2">
+                        <div class="product-image">
+                             <img src="../assets/images/furniture/Residential_Img.jpg" alt="Sofa and living room furniture in a modern apartment."> 
+                        </div>
+                        <div class="product-info">
+                            <h3>Residential Furnishings</h3>
+                            <p>Sourcing of sofas, beds, dining sets, and other home furniture for large residential developments.</p>
+                            <a href="contact.html?subject=residential_furniture_inquiry" class="btn btn-primary">Inquire Now</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -77,12 +106,15 @@
 
         <section class="cta-section">
             <div class="container">
-                <div class="cta-content reveal"><h2>Become a Partner</h2><p>Let's discuss your needs and build a successful collaboration.</p><a href="contact.html" class="btn btn-primary">Contact Us Today</a></div>
+                <div class="cta-content reveal">
+                    <h2>Discuss Your Furniture Contract Needs</h2>
+                    <p>We manage sourcing and logistics for complete interior fit-out projects. Contact us for a consultation.</p>
+                    <a href="contact.html" class="btn btn-primary">Start a Project Inquiry</a>
+                </div>
             </div>
         </section>
     </main>
 
-     <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <div class="footer-grid">
@@ -132,8 +164,7 @@
             </div>
         </div>
     </footer>
-  
-    <!-- Floating Action Buttons & Chatbot Window -->
+
     <div class="floating-action-button">
         <button id="chatbot-toggle" aria-label="Open Chat" aria-expanded="false">
             <i class="fas fa-comments"></i>
@@ -153,15 +184,19 @@
     </div>
 
     <script src="../js/main.js?v=1.1"></script>
-    <script src="../js/animations.js?v=1.1"></script> 
+    <script src="../js/animations.js?v=1.1"></script>
     <script src="../js/chatbot.js?v=1.1"></script> 
 
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('../sw.js')
-                    .then(reg => console.log('SW registered (clients.html).', reg))
-                    .catch(err => console.log('SW registration failed (clients.html):', err));
+                    .then(registration => {
+                        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                    })
+                    .catch(error => {
+                        console.log('ServiceWorker registration failed: ', error);
+                    });
             });
         }
     </script>
