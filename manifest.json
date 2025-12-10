@@ -1,0 +1,25 @@
+{
+  "name": "Micorp Trading LLC",
+  "short_name": "Micorp",
+  "description": "Premier general trading company in Dubai specializing in Electronics, IT, Automobiles, Machinery, Hardware, and Medical Equipment.",
+  "start_url": "/pages/index.html",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#00b8d4",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "assets/images/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/images/icons/icon-144x144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
