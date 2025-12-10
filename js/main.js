@@ -1,11 +1,19 @@
+
 document.addEventListener('DOMContentLoaded', () => {
     // COMMON SITE-WIDE INITIALIZATIONS
+    initTheme(); // Initialize Dark/Light Theme
     initMobileMenu();
     initScrollBehaviors();
     initCurrentYear();
     initFloatingActionButtons();
+    registerServiceWorker(); // Initialize PWA
+    
+    // HERO SLIDER INIT
+    if (document.querySelector('.hero-slider')) {
+        initHeroSlider();
+    }
 
-    // PAGE-SPECIFIC INITIALIZATIONS (for initial load)
+    // PAGE-SPECIFIC INITIALIZATIONS
     if (document.body.classList.contains('contact-page')) {
         initContactPage();
     }
@@ -14,24 +22,150 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+// --- THEME MANAGEMENT (Dark Mode) ---
+function initTheme() {
+    const toggleBtn = document.getElementById('theme-toggle');
+    const html = document.documentElement;
+    const storedTheme = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+    // Set initial theme
+    if (storedTheme) {
+        html.setAttribute('data-theme', storedTheme);
+        updateToggleIcon(storedTheme);
+    } else if (prefersDark) {
+        html.setAttribute('data-theme', 'dark');
+        updateToggleIcon('dark');
+    }
+
+    if (toggleBtn) {
+        toggleBtn.addEventListener('click', () => {
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateToggleIcon(newTheme);
+        });
+    }
+}
+
+function updateToggleIcon(theme) {
+    const toggleBtn = document.getElementById('theme-toggle');
+    if (!toggleBtn) return;
+    
+    // Logic: 
+    // If Theme is Dark, show Sun (to switch to light)
+    // If Theme is Light, show Moon (to switch to dark)
+    if (theme === 'dark') {
+        toggleBtn.innerHTML = '<i class="fas fa-sun"></i>';
+        toggleBtn.setAttribute('aria-label', 'Switch to Light Mode');
+    } else {
+        toggleBtn.innerHTML = '<i class="fas fa-moon"></i>';
+        toggleBtn.setAttribute('aria-label', 'Switch to Dark Mode');
+    }
+}
+
+// --- PWA SERVICE WORKER REGISTRATION ---
+function registerServiceWorker() {
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('../sw.js', { scope: '/' })
+                .then(registration => {
+                    console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                })
+                .catch(error => {
+                    console.log('ServiceWorker registration failed: ', error);
+                });
+        });
+    }
+}
+
+// --- HERO SLIDER LOGIC ---
+function initHeroSlider() {
+    const slider = document.getElementById('homeHeroSlider');
+    const slides = slider.querySelectorAll('.hero-slide');
+    const dotsContainer = document.querySelector('.slider-dots');
+    const prevBtn = document.querySelector('.slider-btn.prev');
+    const nextBtn = document.querySelector('.slider-btn.next');
+    
+    let currentSlide = 0;
+    const totalSlides = slides.length;
+    let autoPlayInterval;
+
+    // Create Dots
+    slides.forEach((_, index) => {
+        const dot = document.createElement('div');
+        dot.classList.add('slider-dot');
+        if (index === 0) dot.classList.add('active');
+        dot.addEventListener('click', () => goToSlide(index));
+        dotsContainer.appendChild(dot);
+    });
+
+    const dots = document.querySelectorAll('.slider-dot');
+
+    function goToSlide(n) {
+        slides[currentSlide].classList.remove('active');
+        dots[currentSlide].classList.remove('active');
+        
+        currentSlide = (n + totalSlides) % totalSlides;
+        
+        slides[currentSlide].classList.add('active');
+        dots[currentSlide].classList.add('active');
+        
+        resetAutoPlay();
+    }
+
+    function nextSlide() {
+        goToSlide(currentSlide + 1);
+    }
+
+    function prevSlide() {
+        goToSlide(currentSlide - 1);
+    }
+
+    function startAutoPlay() {
+        autoPlayInterval = setInterval(nextSlide, 6000); 
+    }
+
+    function resetAutoPlay() {
+        clearInterval(autoPlayInterval);
+        startAutoPlay();
+    }
+
+    // Event Listeners
+    nextBtn.addEventListener('click', nextSlide);
+    prevBtn.addEventListener('click', prevSlide);
+
+    // Initialize
+    startAutoPlay();
+}
+
 // --- COMMON FUNCTIONS ---
 function initMobileMenu() {
     const menuToggle = document.querySelector('.menu-toggle');
     const navWrapper = document.querySelector('.nav-wrapper');
+    const navLinks = document.querySelectorAll('.nav-links a');
 
     if (menuToggle && navWrapper) {
+        // Toggle Menu
         menuToggle.addEventListener('click', () => {
             const isActive = menuToggle.classList.toggle('active');
             navWrapper.classList.toggle('active');
             menuToggle.setAttribute('aria-expanded', isActive ? 'true' : 'false');
             document.body.classList.toggle('menu-open', isActive);
+        });
 
-            if (isActive) {
-                const navLinks = navWrapper.querySelectorAll('.nav-links li');
-                navLinks.forEach((li, index) => {
-                    li.style.setProperty('--item-index', index);
-                });
-            }
+        // Close Menu on Link Click
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if (navWrapper.classList.contains('active')) {
+                    menuToggle.classList.remove('active');
+                    navWrapper.classList.remove('active');
+                    menuToggle.setAttribute('aria-expanded', 'false');
+                    document.body.classList.remove('menu-open');
+                }
+            });
         });
     }
 }
@@ -43,51 +177,29 @@ function initScrollBehaviors() {
     const fabContainer = document.querySelector('.floating-action-button');
     const chatbotWindow = document.getElementById('chatbot-window');
     const chatbotToggle = document.getElementById('chatbot-toggle');
+    const isHomePage = document.body.classList.contains('home-page');
     
-    // Set initial state based on body class
-    const setHeaderHomePageStatus = () => {
-        if (document.body.classList.contains('home-page')) {
-            siteHeader.classList.add('is-on-home-page');
-        } else {
-            siteHeader.classList.remove('is-on-home-page');
-        }
-    };
-    setHeaderHomePageStatus(); // Run on initial load
+    // Explicitly add class for home page header styling
+    if(isHomePage && !siteHeader.classList.contains('is-on-home-page')) {
+        siteHeader.classList.add('is-on-home-page');
+    }
 
-    // Re-check on route change (SPA)
-    const observer = new MutationObserver(setHeaderHomePageStatus);
-    observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
-
-    let lastScrollTop = 0;
     window.addEventListener('scroll', () => {
         let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
         
+        // Close chatbot if open on scroll
         if (chatbotWindow && chatbotWindow.classList.contains('active')) {
             chatbotWindow.classList.remove('active');
             if (chatbotToggle) chatbotToggle.setAttribute('aria-expanded', 'false');
         }
         
-        // Handle header style change
+        // Handle header style change (Glass effect intensifies on scroll)
         if (scrollTop > 50) {
             siteHeader.classList.add('header-scrolled');
         } else {
             siteHeader.classList.remove('header-scrolled');
         }
         
-        // Hide/show on scroll logic for header and FAB
-        const isCurrentlyHomePage = document.body.classList.contains('home-page');
-        if (scrollTop > lastScrollTop && scrollTop > 100) {
-            // Scrolling Down
-            if (!isCurrentlyHomePage) siteHeader.classList.add('hidden'); // Hide header only on non-home pages
-            if (fabContainer) fabContainer.classList.add('hidden');
-        } else {
-            // Scrolling Up
-            if (!isCurrentlyHomePage) siteHeader.classList.remove('hidden');
-            if (fabContainer) fabContainer.classList.remove('hidden');
-        }
-        
-        lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
-
     }, { passive: true });
 }
 
@@ -147,15 +259,18 @@ function animateCount(element, start, end, duration) {
 // --- CONTACT PAGE SPECIFIC ---
 function initContactPage() {
     const mapElement = document.getElementById('map');
-    if (mapElement && typeof L !== 'undefined') {
-        // Clear previous map instance if it exists
-        if (mapElement._leaflet_id) {
-            mapElement._leaflet_id = null;
+    const lat = 25.2625; 
+    const lng = 55.2980;
+
+    function initLeafletMap() {
+        if (!mapElement || mapElement.dataset.mapReady === 'true') return;
+        if (typeof L === 'undefined') {
+            console.warn('Leaflet not available');
+            document.querySelectorAll('.map-placeholder').forEach(p => p.classList.add('map-hidden'));
+            return;
         }
-        const lat = 25.2625; 
-        const lng = 55.2980;
         try {
-            var map = L.map('map').setView([lat, lng], 15);
+            const map = L.map('map').setView([lat, lng], 15);
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 maxZoom: 19,
                 attribution: '© OpenStreetMap contributors'
@@ -163,9 +278,33 @@ function initContactPage() {
             L.marker([lat, lng]).addTo(map)
                 .bindPopup('<b>Micorp Trading LLC</b><br>Office 709, Fahidi Heights<br>Al Hamriya, Bur Dubai')
                 .openPopup();
-        } catch(e) {
-            console.error("Error initializing Leaflet map:", e);
+
+            // mark as ready and hide placeholder
+            mapElement.classList.add('map-ready');
+            mapElement.dataset.mapReady = 'true';
+            document.querySelectorAll('.map-placeholder').forEach(p => p.classList.add('map-hidden'));
+        } catch (e) {
+            console.error('Error initializing Leaflet map:', e);
+            document.querySelectorAll('.map-placeholder').forEach(p => p.classList.add('map-hidden'));
             mapElement.innerHTML = "<p style='color:red; text-align:center;'>Map could not be loaded.</p>";
+        }
+    }
+
+    // Lazy-init map when it scrolls into view or when user clicks the Open in Maps link
+    if (mapElement) {
+        const observer = new IntersectionObserver((entries, obs) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    initLeafletMap();
+                    obs.unobserve(entry.target);
+                }
+            });
+        }, { root: null, rootMargin: '200px', threshold: 0.01 });
+        observer.observe(mapElement);
+
+        const openMaps = document.getElementById('open-in-maps');
+        if (openMaps) {
+            openMaps.addEventListener('click', () => initLeafletMap());
         }
     }
 
@@ -177,30 +316,62 @@ function initContactPage() {
             button.setAttribute('aria-expanded', !isExpanded ? 'true' : 'false');
             button.classList.toggle('active');
             answer.classList.toggle('show');
-            if (answer.classList.contains('show')) {
-                 answer.style.maxHeight = answer.scrollHeight + "px";
-            } else {
-                answer.style.maxHeight = null;
-            }
+            answer.style.maxHeight = !isExpanded ? answer.scrollHeight + "px" : null;
         });
     });
 
-    const urlParams = new URLSearchParams(window.location.search);
-    const subjectParam = urlParams.get('subject');
-    const subjectSelect = document.getElementById('subject');
-    if (subjectParam && subjectSelect && subjectSelect.querySelector(`option[value="${subjectParam}"]`)) {
-        subjectSelect.value = subjectParam;
-    }
-    
     const contactForm = document.getElementById('contactForm');
     if (contactForm && contactForm.action && contactForm.action.includes('formspree.io')) {
+        const statusElem = document.getElementById('contactFormStatus');
+        const hiddenReplyTo = document.getElementById('contact_replyto');
+        const submitButton = document.getElementById('contactFormSubmit') || contactForm.querySelector('button[type="submit"]');
+
+        // helper: show floating toast
+        function showToast(type, title, text) {
+            const toast = document.getElementById('contactToast');
+            if (!toast) return;
+            toast.className = 'contact-toast ' + (type === 'success' ? 'success' : 'error') + ' show';
+            toast.innerHTML = `
+                <div class="toast-icon">${type === 'success' ? '<i class="fas fa-check"></i>' : '<i class="fas fa-exclamation-triangle"></i>'}</div>
+                <div class="toast-body">
+                    <div class="toast-title">${title}</div>
+                    <div class="toast-text">${text}</div>
+                </div>`;
+            // auto hide
+            setTimeout(() => { toast.classList.remove('show'); }, 5200);
+        }
+
         contactForm.addEventListener('submit', async function(event) {
             event.preventDefault();
+
+            // Simple client-side validation to provide immediate feedback
+            const emailInput = document.getElementById('contact_email');
+            if (!emailInput || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value)) {
+                if (statusElem) {
+                    statusElem.className = 'form-status error';
+                    statusElem.textContent = 'Please enter a valid email address.';
+                    emailInput.focus();
+                } else {
+                    alert('Please enter a valid email address.');
+                }
+                return;
+            }
+
             const formData = new FormData(contactForm);
-            const submitButton = contactForm.querySelector('button[type="submit"]');
-            const originalButtonText = submitButton.textContent;
-            submitButton.disabled = true;
-            submitButton.textContent = 'Sending...';
+            const originalButtonText = submitButton ? (submitButton.querySelector('.btn-label') ? submitButton.querySelector('.btn-label').textContent : submitButton.textContent) : null;
+            if (submitButton) { submitButton.disabled = true; submitButton.classList.add('is-loading'); }
+
+            // Ensure _replyto is present both in FormData (for fetch) and in hidden input (for non-JS fallback)
+            const emailVal = formData.get('email') || '';
+            if (emailVal) {
+                formData.set('_replyto', emailVal);
+                if (hiddenReplyTo) hiddenReplyTo.value = emailVal;
+            }
+
+            if (statusElem) {
+                statusElem.className = 'form-status sending';
+                statusElem.innerHTML = '<span class="spinner" aria-hidden="true"></span> Sending your message...';
+            }
 
             try {
                 const response = await fetch(contactForm.action, {
@@ -208,24 +379,38 @@ function initContactPage() {
                     body: formData,
                     headers: { 'Accept': 'application/json' }
                 });
+
                 if (response.ok) {
-                    alert("Thank you for your message! We'll be in touch soon.");
+                    // show toast and accessible status
+                    showToast('success', 'Message Sent', "We'll reply shortly.");
+                    if (statusElem) { statusElem.className = 'form-status success'; statusElem.textContent = "Thank you — your message has been sent."; }
                     contactForm.reset();
-                    if (subjectParam && subjectSelect && subjectSelect.querySelector(`option[value="${subjectParam}"]`)) {
-                        subjectSelect.value = subjectParam;
-                    }
+                    if (hiddenReplyTo) hiddenReplyTo.value = '';
+                    const firstInput = contactForm.querySelector('input, textarea, select'); if (firstInput) firstInput.focus();
+                    // clear accessible status after some time
+                    setTimeout(() => { if (statusElem) { statusElem.className = 'form-status'; statusElem.textContent = ''; } }, 6000);
                 } else {
-                    const errorData = await response.json().catch(() => ({ error: "Failed to parse server error response." }));
-                    let errorMessage = "Oops! There was a problem submitting your form.";
-                    if (errorData && errorData.errors && Array.isArray(errorData.errors)) errorMessage += "\nDetails: " + errorData.errors.map(e => e.message || 'Unknown error').join(", ");
-                    else if (errorData && errorData.error) errorMessage += " Details: " + errorData.error;
-                    alert(errorMessage  + " Please try again or contact us directly.");
+                    const errorData = await response.json().catch(() => ({}));
+                    console.error('Form submission error:', errorData);
+                    showToast('error', 'Send Failed', 'There was a problem sending your message. Please try again later.');
+                    if (statusElem) { statusElem.className = 'form-status error'; statusElem.textContent = 'There was a problem sending your message. Please try again later.'; }
                 }
             } catch (error) {
-                alert("An error occurred while sending your message. Please try again or contact us directly.");
+                console.error('Network error:', error);
+                if (statusElem) {
+                    statusElem.className = 'form-status error';
+                    statusElem.textContent = 'Network error. Please try again later or email info@micorptrd.com.';
+                } else {
+                    alert('Network error. Please try again later or email info@micorptrd.com.');
+                }
             } finally {
-                submitButton.disabled = false;
-                submitButton.textContent = originalButtonText;
+                if (submitButton) {
+                    submitButton.disabled = false;
+                    submitButton.classList.remove('is-loading');
+                    // restore label text
+                    const label = submitButton.querySelector('.btn-label');
+                    if (label && originalButtonText) label.textContent = originalButtonText;
+                }
             }
         });
     }

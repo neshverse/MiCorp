@@ -61,6 +61,12 @@ function initScrollReveal() {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('active');
+                // If this entry is inside the stats section, trigger the counter animation
+                try {
+                    if (entry.target.closest && entry.target.closest('.stats-section')) {
+                        animateCounters(entry.target.closest('.stats-section'));
+                    }
+                } catch (e) {}
                 observer.unobserve(entry.target); // Unobserve after animation is triggered
             }
         });
@@ -74,5 +80,53 @@ function initScrollReveal() {
 document.addEventListener('DOMContentLoaded', () => {
     splitCharsForAnimation();
     initScrollReveal();
+    // Fallback: if stats are already visible on load, animate them
+    requestAnimationFrame(() => animateCounters());
 });
-// Re-run splitCharsForAnimation on window resize to handle responsive text
+
+
+/**
+ * Animate numeric counters inside `.stat-number` elements.
+ * Accepts an optional container (Element) to scope the animation.
+ */
+function animateCounters(container) {
+    const root = container || document;
+    const counters = root.querySelectorAll('.stat-number');
+    if (!counters || counters.length === 0) return;
+
+    counters.forEach(el => {
+        if (el.dataset.animated === 'true') return; // already animated
+
+        let raw = el.getAttribute('data-count') || el.textContent || '0';
+        // keep suffix like + or %
+        const suffixMatch = raw.match(/([+%])+$/);
+        const suffix = suffixMatch ? suffixMatch[0] : '';
+        const numeric = parseFloat(raw.replace(/[+, %]/g, '')) || 0;
+        const duration = 1400; // ms
+        const start = performance.now();
+
+        function step(now) {
+            const t = Math.min((now - start) / duration, 1);
+            // easeOutCubic
+            const eased = 1 - Math.pow(1 - t, 3);
+            const current = Math.round(numeric * eased);
+            el.textContent = current.toLocaleString();
+            if (t < 1) {
+                requestAnimationFrame(step);
+            } else {
+                // make sure final value shows decimals correctly if original had them
+                if (raw.indexOf('.') !== -1) {
+                    el.textContent = numeric.toFixed(1);
+                } else {
+                    el.textContent = numeric.toLocaleString();
+                }
+                if (suffix) el.textContent = el.textContent + suffix;
+                el.dataset.animated = 'true';
+            }
+        }
+
+        // start from 0
+        el.textContent = '0';
+        requestAnimationFrame(step);
+    });
+}
