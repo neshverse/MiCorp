@@ -1,0 +1,381 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Micorp Trading LLC | Global Trading Solutions</title>
+    <meta name="description" content="Premier general trading company in Dubai specializing in Electronics, IT, Automobiles, Machinery, Hardware, and Medical Equipment.">
+    
+    <link rel="stylesheet" href="../css/style.css?v=2.3">
+    <link rel="stylesheet" href="../css/animations.css?v=2.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+     <!-- PWA Enhancements -->
+    <link rel="manifest" href="../manifest.json">
+    <meta name="theme-color" content="#00b8d4">
+    <link rel="icon" href="../assets/images/icons/icon-144x144.png">
+    <link rel="apple-touch-icon" href="../assets/images/icons/icon-192x192.png">
+</head>
+<body class="home-page">
+
+    <!-- Header Section (Global Seamless Style) -->
+    <header class="site-header is-on-home-page">
+        <nav class="navbar">
+            <div class="container">
+                <a href="index.html" class="logo">
+                    <img src="../assets/images/MiCORP_Logo.png" alt="Micorp Trading LLC Logo">
+                </a>
+                <button class="menu-toggle" aria-label="Toggle Menu" aria-expanded="false">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <div class="nav-wrapper">
+                    <ul class="nav-links">
+                        <li><a href="index.html" class="active">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="products.html">Products</a></li>
+                        <li><a href="why-choose-us.html">Why Us</a></li>
+                        <li><a href="clients.html">Clients</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li>
+                            <!-- Mobile-Ready Theme Toggle -->
+                            <button id="theme-toggle" aria-label="Toggle Dark Mode">
+                                <i class="fas fa-moon"></i>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Modern Hero Carousel - 5 Slides -->
+        <section class="hero-slider-section">
+            <div class="hero-slider" id="homeHeroSlider">
+                
+                <!-- Slide 1: General/Global -->
+                <div class="hero-slide active">
+                    <div class="slide-bg">
+                        <picture>
+                            <source media="(min-width: 1024px)" srcset="../assets/images/hero/Homepage_Desktop.jpg">
+                            <source media="(min-width: 768px)" srcset="../assets/images/hero/Homepage_Tablet.jpg">
+                            <img src="../assets/images/hero/Homepage_Mobile.jpg" alt="Global Trading Network" fetchpriority="high">
+                        </picture>
+                    </div>
+                    <div class="hero-overlay"></div>
+                    <div class="hero-content container">
+                        <span class="slide-subtitle animate-slide-up">Welcome to Micorp</span>
+                        <h1 class="animate-slide-up delay-1">Trading for <br> Everyone, Everywhere.</h1>
+                        <p class="animate-slide-up delay-2">Connecting global markets with premium Electronics, Industrial Machinery, and IT Solutions.</p>
+                        <div class="hero-buttons animate-slide-up delay-3">
+                            <a href="products.html" class="btn btn-primary">Explore Products</a>
+                            <a href="contact.html" class="btn btn-secondary">Get a Quote</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 2: Electronics & IT -->
+                <div class="hero-slide">
+                    <div class="slide-bg">
+                        <picture>
+                            <source media="(min-width: 1024px)" srcset="../assets/images/Electronics _hero.jpg">
+                            <source media="(min-width: 768px)" srcset="../assets/images/Electronics _hero.jpg">
+                            <img src="../assets/images/Electronics _hero.jpg" alt="Advanced Electronics" loading="lazy">
+                        </picture>
+                    </div>
+                    <div class="hero-overlay"></div>
+                    <div class="hero-content container">
+                        <span class="slide-subtitle animate-slide-up">Technology Solutions</span>
+                        <h1 class="animate-slide-up delay-1">Cutting-Edge <br>Electronics & IT</h1>
+                        <p class="animate-slide-up delay-2">From consumer gadgets to enterprise networking infrastructure, we supply the technology that powers your world.</p>
+                        <div class="hero-buttons animate-slide-up delay-3">
+                            <a href="products.html#electronics" class="btn btn-primary">View Electronics</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 3: Automotive -->
+                <div class="hero-slide">
+                    <div class="slide-bg">
+                        <picture>
+                            <source media="(min-width: 1024px)" srcset="../assets/images/Automotive Solutions/Automobiles_Hero.jpg">
+                            <source media="(min-width: 768px)" srcset="../assets/images/Automotive Solutions/Automobiles_Hero.jpg">
+                            <img src="../assets/images/Automotive Solutions/Automobiles_Hero.jpg" alt="Automotive Excellence" loading="lazy">
+                        </picture>
+                    </div>
+                    <div class="hero-overlay"></div>
+                    <div class="hero-content container">
+                        <span class="slide-subtitle animate-slide-up">Automotive Excellence</span>
+                        <h1 class="animate-slide-up delay-1">Luxury & Commercial <br>Vehicle Export</h1>
+                        <p class="animate-slide-up delay-2">Premium sedans, rugged commercial fleets, and genuine spare parts delivered worldwide.</p>
+                        <div class="hero-buttons animate-slide-up delay-3">
+                            <a href="automobiles.html" class="btn btn-primary">Inquire Now</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 4: Machinery & Hardware -->
+                <div class="hero-slide">
+                    <div class="slide-bg">
+                        <picture>
+                            <source media="(min-width: 1024px)" srcset="../assets/images/machinery hero.jpg">
+                            <source media="(min-width: 768px)" srcset="../assets/images/machinery hero.jpg">
+                            <img src="../assets/images/machinery hero.jpg" alt="Heavy Machinery" loading="lazy">
+                        </picture>
+                    </div>
+                    <div class="hero-overlay"></div>
+                    <div class="hero-content container">
+                        <span class="slide-subtitle animate-slide-up">Industrial Power</span>
+                        <h1 class="animate-slide-up delay-1">Heavy Machinery & <br>Construction Hardware</h1>
+                        <p class="animate-slide-up delay-2">Supplying the tools that build the future. Reliable sourcing for construction, manufacturing, and industry.</p>
+                        <div class="hero-buttons animate-slide-up delay-3">
+                            <a href="machinery.html" class="btn btn-primary">View Equipment</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 5: Medical & Furniture -->
+                <div class="hero-slide">
+                    <div class="slide-bg">
+                        <picture>
+                            <source media="(min-width: 1024px)" srcset="../assets/images/Medical hero.jpg">
+                            <source media="(min-width: 768px)" srcset="../assets/images/Medical hero.jpg">
+                            <img src="../assets/images/Medical hero.jpg" alt="Medical & Furniture" loading="lazy">
+                        </picture>
+                    </div>
+                    <div class="hero-overlay"></div>
+                    <div class="hero-content container">
+                        <span class="slide-subtitle animate-slide-up">Health & Lifestyle</span>
+                        <h1 class="animate-slide-up delay-1">Medical Equipment & <br>Interior Solutions</h1>
+                        <p class="animate-slide-up delay-2">Certified medical devices for healthcare and stylish furniture for modern spaces.</p>
+                        <div class="hero-buttons animate-slide-up delay-3">
+                            <a href="medical-equipment.html" class="btn btn-primary">View Catalog</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slider Controls -->
+            <div class="slider-nav">
+                <button class="slider-btn prev" aria-label="Previous Slide"><i class="fas fa-chevron-left"></i></button>
+                <div class="slider-dots"></div>
+                <button class="slider-btn next" aria-label="Next Slide"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </section>
+    
+        <!-- About Preview -->
+        <section id="about" class="about-section">
+            <div class="container">
+                <div class="about-content">
+                    <div class="about-text reveal animate-from-left">
+                        <span class="slide-subtitle" style="margin-bottom: 15px; color: var(--primary-color); border-color: var(--primary-color);">Who We Are</span>
+                        <h2>Bridging Innovation & Reliability</h2>
+                        <p>Established in Dubai, Micorp Trading LLC has grown into a versatile trading powerhouse. We don't just move goods; we deliver value across seven key industrial sectors.</p>
+                        <p>From equipping hospitals to furnishing offices and supplying heavy machinery, our diverse portfolio ensures your business finds exactly what it needs, when it needs it.</p>
+                        <a href="about.html" class="btn btn-primary mt-20">Discover Our Story</a>
+                    </div>
+                    <div class="about-image reveal animate-from-right">
+                        <img src="../assets/images/About_us_office.jpg" loading="lazy" alt="Micorp Office">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- New Products Grid (Strict 3 Boxes Per Row) -->
+        <section class="products-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="reveal">Our Business Sectors</h2>
+                    <p class="reveal delay-1">Comprehensive trading solutions across key industries.</p>
+                </div>
+                
+                <div class="product-categories">
+                    <!-- Electronics -->
+                    <div class="product-card reveal">
+                        <div class="product-image">
+                            <img src="../assets/images/Electronics_Img.jpg" loading="lazy" alt="Consumer Electronics">
+                        </div>
+                        <div class="product-info">
+                            <h3>Electronics</h3>
+                            <p>Consumer gadgets, smart home devices, and appliances.</p>
+                            <a href="products.html#electronics" class="btn btn-secondary">View Details</a>
+                        </div>
+                    </div>
+
+                    <!-- IT Products -->
+                    <div class="product-card reveal delay-1">
+                        <div class="product-image">
+                            <img src="../assets/images/IT_Products_Img.jpg" loading="lazy" alt="IT Infrastructure">
+                        </div>
+                        <div class="product-info">
+                            <h3>IT Products</h3>
+                            <p>Servers, networking, and enterprise computing.</p>
+                            <a href="it-products.html" class="btn btn-secondary">View Details</a>
+                        </div>
+                    </div>
+
+                    <!-- Automobiles -->
+                    <div class="product-card reveal delay-2">
+                        <div class="product-image">
+                            <img src="../assets/images/Automobiles.jpg" loading="lazy" alt="Luxury Cars">
+                        </div>
+                        <div class="product-info">
+                            <h3>Automobiles</h3>
+                            <p>Luxury, passenger, and commercial vehicle export.</p>
+                            <a href="automobiles.html" class="btn btn-secondary">View Details</a>
+                        </div>
+                    </div>
+
+                    <!-- Machinery -->
+                    <div class="product-card reveal delay-3">
+                        <div class="product-image">
+                            <img src="../assets/images/machinery.jpg" loading="lazy" alt="Heavy Machinery">
+                        </div>
+                        <div class="product-info">
+                            <h3>Machinery</h3>
+                            <p>Industrial, construction, and agricultural equipment.</p>
+                            <a href="machinery.html" class="btn btn-secondary">View Details</a>
+                        </div>
+                    </div>
+
+                    <!-- Hardware -->
+                    <div class="product-card reveal">
+                        <div class="product-image">
+                            <img src="../assets/images/industry_machinery.avif" loading="lazy" alt="Hardware Tools">
+                        </div>
+                        <div class="product-info">
+                            <h3>Hardware & Tools</h3>
+                            <p>Professional grade tools and building materials.</p>
+                            <a href="hardware.html" class="btn btn-secondary">View Details</a>
+                        </div>
+                    </div>
+
+                    <!-- Medical -->
+                    <div class="product-card reveal delay-1">
+                        <div class="product-image">
+                            <img src="../assets/images/medical.jpg" loading="lazy" alt="Medical Equipment">
+                        </div>
+                        <div class="product-info">
+                            <h3>Medical Equipment</h3>
+                            <p>Certified diagnostic and surgical solutions.</p>
+                            <a href="medical-equipment.html" class="btn btn-secondary">View Details</a>
+                        </div>
+                    </div>
+
+                    <!-- Furniture -->
+                    <div class="product-card reveal delay-2">
+                        <div class="product-image">
+                            <img src="../assets/images/furniture.jpg" loading="lazy" alt="Modern Furniture">
+                        </div>
+                        <div class="product-info">
+                            <h3>Furniture</h3>
+                            <p>Commercial, office, and residential furnishing.</p>
+                            <a href="furniture.html" class="btn btn-secondary">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Compact Trusted By Section -->
+        <section class="clients-section-compact">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="reveal" style="font-size: 1.5rem;">Trusted By Industry Leaders</h2>
+                </div>
+                <div class="clients-grid">
+                    <div class="client-logo animate-scale"><img src="../assets/images/clients/ABS_logo.png" loading="lazy" alt="ABS"></div>
+                    <div class="client-logo animate-scale delay-1"><img src="../assets/images/clients/UAC_Logo.jpg" loading="lazy" alt="UAC"></div>
+                    <div class="client-logo animate-scale delay-2"><img src="../assets/images/clients/Bizpro_logo.png" loading="lazy" alt="Bizpro"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact CTA -->
+        <section class="cta-section">
+            <div class="container">
+                <div class="cta-content reveal">
+                    <h2>Ready to Expand Your Business?</h2>
+                    <p>Partner with Micorp today for reliable global sourcing and logistics.</p>
+                    <a href="contact.html" class="btn btn-primary">Start a Conversation</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <img src="../assets/images/MiCORP_Logo.jpg" loading="lazy" alt="Micorp Logo" class="footer-logo">
+                    <p>Connecting the world through trusted trading solutions. Your partner in global commerce.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="products.html">Products</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Categories</h3>
+                    <ul>
+                        <li><a href="products.html#electronics">Electronics</a></li>
+                        <li><a href="it-products.html">IT Products</a></li>
+                        <li><a href="automobiles.html">Automobiles</a></li>
+                        <li><a href="machinery.html">Machinery</a></li>
+                        <li><a href="hardware.html">Hardware</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Contact Us</h3>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> Dubai, United Arab Emirates</li>
+                        <li><i class="fas fa-phone"></i> +971 50 329 4310</li>
+                        <li><i class="fas fa-envelope"></i> info@micorptrd.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 Micorp Trading LLC. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Chatbot -->
+    <div class="floating-action-button">
+        <button id="chatbot-toggle" aria-label="Open Chat">
+            <i class="fas fa-comment-dots"></i>
+        </button>
+    </div>
+
+    <div id="chatbot-window">
+        <div id="chatbot-header">
+            <span>Micorp Assistant</span>
+            <button id="chatbot-close"><i class="fas fa-times"></i></button>
+        </div>
+        <div id="chatbot-messages"></div>
+        <div id="chatbot-input-area">
+            <input type="text" id="chatbot-input" placeholder="Ask about products...">
+            <button id="chatbot-send"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+
+    <script src="../js/main.js?v=2.1"></script>
+    <script src="../js/animations.js?v=2.0"></script>
+    <script src="../js/chatbot.js?v=2.0"></script>
+</body>
+</html>

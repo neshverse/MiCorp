@@ -1,0 +1,261 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | Micorp Trading LLC</title>
+    <meta name="description" content="Get in touch with Micorp Trading LLC for inquiries about Electronics, IT, Automobiles, and more.">
+    
+    <link rel="stylesheet" href="../css/style.css?v=2.5">
+    <link rel="stylesheet" href="../css/animations.css?v=2.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
+
+    <link rel="manifest" href="../manifest.json">
+    <meta name="theme-color" content="#00b8d4">
+    <link rel="icon" href="../assets/images/icons/icon-144x144.png">
+</head>
+<body class="contact-page">
+    
+    <header class="site-header">
+        <nav class="navbar">
+            <div class="container">
+                <a href="index.html" class="logo">
+                    <img src="../assets/images/MiCORP_Logo.png" alt="Micorp Trading LLC Logo">
+                </a>
+                <button class="menu-toggle" aria-label="Toggle navigation" aria-expanded="false">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <div class="nav-wrapper">
+                    <ul class="nav-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="products.html">Products</a></li>
+                        <li><a href="why-choose-us.html">Why Choose Us</a></li>
+                        <li><a href="clients.html">Clients</a></li>
+                        <li><a href="contact.html" class="active">Contact</a></li>
+                        <li>
+                            <button id="theme-toggle" aria-label="Toggle Dark Mode">
+                                <i class="fas fa-moon"></i>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Standard Hero -->
+        <section class="page-hero">
+            <div class="hero-background">
+                <img src="../assets/images/hero/get-touch.jpg" alt="Contact Us" fetchpriority="high">
+                <div class="hero-overlay"></div>
+            </div>
+            <div class="container">
+                <h1 class="reveal animate-text js-split">Get in Touch</h1>
+                <p class="reveal delay-1">We'd love to hear from you. Let's start a conversation about your global trading needs.</p>
+            </div>
+        </section>
+
+        <!-- Standard Info Grid -->
+        <section class="contact-info-section">
+            <div class="container">
+                <div class="contact-info-grid reveal animate-from-bottom">
+                    <div class="info-card">
+                        <div class="info-icon"><i class="fas fa-phone-alt"></i></div>
+                        <h3>Phone</h3>
+                        <p><a href="tel:+971503294310">+971 50 329 4310</a></p>
+                        <p><a href="tel:+97142390917">+971 4 239 0917</a></p>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon"><i class="fas fa-envelope"></i></div>
+                        <h3>Email</h3>
+                        <p><a href="mailto:info@micorptrd.com">info@micorptrd.com</a></p>
+                        <p><a href="mailto:shanvir@micorptrd.com">shanvir@micorptrd.com</a></p>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon"><i class="fas fa-map-marker-alt"></i></div>
+                        <h3>Location</h3>
+                        <p>Office 709, Fahidi Heights</p>
+                        <p>Bur Dubai, United Arab Emirates</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Compact Contact Form & Map (Improved) -->
+        <section class="contact-split-section bg-light">
+            <div class="container">
+                <div class="section-header" style="margin-bottom: 28px;">
+                    <h2 class="reveal">Contact US</h2>
+                    <p class="reveal delay-1" style="color: var(--text-muted); max-width: 700px;">Fill out the form below and our team will get back to you within 24 hours. Or use the contact details to reach us directly.</p>
+                </div>
+
+                <div class="contact-layout contact-cards">
+                    <div class="contact-form-wrapper reveal animate-from-left">
+                        <div class="section-header" style="text-align: left; margin-bottom: 30px;">
+                            <h2 style="font-size: 2rem; margin-top: 0;">How can we help?</h2>
+                        </div>
+                        <form id="contactForm" action="https://formspree.io/f/mldnollk" method="POST" novalidate>
+                            <!-- Hidden reply-to for non-JS fallback; JS will update this value on submit -->
+                            <input type="hidden" name="_replyto" id="contact_replyto" value="">
+
+                            <div class="form-group">
+                                <input id="contact_name" type="text" name="name" placeholder="Your Full Name" required>
+                            </div>
+                            <div class="form-group">
+                                <input id="contact_email" type="email" name="email" placeholder="Email Address" required>
+                            </div>
+                            <div class="form-group">
+                                <select id="contact_subject" name="subject" required>
+                                    <option value="" disabled selected>I'm interested in...</option>
+                                    <option value="Electronics">Electronics</option>
+                                    <option value="Automobiles">Automobiles</option>
+                                    <option value="Machinery">Machinery</option>
+                                    <option value="IT Products">IT Products</option>
+                                    <option value="Medical">Medical Equipment</option>
+                                    <option value="General Inquiry">General Inquiry</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <textarea id="contact_message" name="message" rows="4" placeholder="Tell us about your requirements..." required></textarea>
+                            </div>
+
+                            <!-- Inline status message for accessibility (aria-live) -->
+                            <div id="contactFormStatus" class="form-status" role="status" aria-live="polite"></div>
+
+                            <!-- Modern primary button with spinner + label -->
+                            <button id="contactFormSubmit" type="submit" class="btn btn-primary" style="width: 100%;" aria-live="polite">
+                                <span class="btn-spinner" aria-hidden="true"></span>
+                                <span class="btn-label">Send Message</span>
+                            </button>
+
+                            <!-- Floating toast for success/error (visually richer feedback) -->
+                            <div id="contactToast" class="contact-toast" role="status" aria-live="polite" aria-atomic="true"></div>
+                        </form>
+                    </div>
+
+                    <div class="contact-card map-wrapper reveal animate-from-right">
+                        <div class="map-placeholder" aria-hidden="true">
+                            <div class="map-spinner" role="status" aria-hidden="true"></div>
+                            <div class="map-text">Loading map…</div>
+                        </div>
+                        <div id="map" aria-label="Company location map" data-map-init="lazy" class="map-area"></div>
+                        <div class="map-cta">
+                            <p><strong>Visit Us</strong></p>
+                            <a href="https://www.google.com/maps/search/?api=1&query=Dubai+Bur+Dubai" target="_blank" rel="noopener" class="btn btn-outline" id="open-in-maps">Open in Maps</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="faq-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="reveal">Common Questions</h2>
+                    <p class="reveal delay-1">Quick answers to help you get started.</p>
+                </div>
+                
+                <div class="faq-container reveal">
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>Do you handle international shipping?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Yes, we provide end-to-end logistics solutions, ensuring your products are shipped safely and cleared through customs in your destination country.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>What are your payment terms?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>We typically work with Letter of Credit (LC) and Bank Transfer (TT). Specific terms can be discussed based on order volume and relationship.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>Can I order mixed product containers?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Yes! One of our key strengths is consolidation. You can mix electronics, hardware, and furniture in a single shipment to optimize costs.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <img src="../assets/images/MiCORP_Logo.jpg" loading="lazy" alt="Micorp Logo" class="footer-logo">
+                    <p>Connecting global markets with trusted solutions.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="products.html">Products</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Products</h3>
+                    <ul>
+                        <li><a href="it-products.html">IT Products</a></li>
+                        <li><a href="automobiles.html">Automobiles</a></li>
+                        <li><a href="machinery.html">Machinery</a></li>
+                        <li><a href="hardware.html">Hardware</a></li>
+                        <li><a href="medical-equipment.html">Medical</a></li>
+                        <li><a href="furniture.html">Furniture</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Contact</h3>
+                    <ul>
+                        <li><i class="fas fa-phone"></i> +971 50 329 4310</li>
+                        <li><i class="fas fa-envelope"></i> info@micorptrd.com</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Dubai, UAE</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 Micorp Trading LLC. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div class="floating-action-button">
+        <button id="chatbot-toggle" aria-label="Open Chat"><i class="fas fa-comment-dots"></i></button>
+    </div>
+    <div id="chatbot-window">
+        <div id="chatbot-header"><span>Chat with Micorp</span><button id="chatbot-close">×</button></div>
+        <div id="chatbot-messages"></div>
+        <div id="chatbot-input-area"><input type="text" id="chatbot-input" placeholder="Type..."><button id="chatbot-send">Send</button></div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="../js/main.js?v=2.0"></script>
+    <script src="../js/animations.js?v=2.0"></script>
+    <script src="../js/chatbot.js?v=2.0"></script> 
+</body>
+</html>
